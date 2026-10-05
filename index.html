@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Social Media Information Study &mdash; DoMS, IIT Madras</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #4f46e5;
+  --primary-dark: #3730a3;
+  --primary-light: #eef2ff;
+  --primary-soft: #e0e7ff;
+  --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --secondary-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
+
+  /* Soothing Pastel Accents */
+  --tint-blue: #eff6ff;
+  --tint-purple: #f5f3ff;
+  --tint-green: #f0fdf4;
+  --tint-amber: #fffbeb;
+  --tint-rose: #fff1f2;
+
+  --border-blue: #93c5fd;
+  --border-purple: #c084fc;
+  --border-green: #86efac;
+  --border-amber: #fde68a;
+  --border-rose: #fecdd3;
+
+  /* Richer, Noticeably Colorful Pastel Ambient Background */
+  --bg-page: radial-gradient(at 0% 0%, #bae6fd 0px, transparent 55%),
+             radial-gradient(at 100% 0%, #e9d5ff 0px, transparent 55%),
+             radial-gradient(at 100% 100%, #fde68a 0px, transparent 55%),
+             radial-gradient(at 0% 100%, #bbf7d0 0px, transparent 55%),
+             #eff6ff;
+
+  --border: #cbd5e1;
+  --border-card: #94a3b8;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-soft: #64748b;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 9999px;
+  --shadow-sm: 0 2px 6px rgba(99, 102, 241, 0.05);
+  --shadow-md: 0 10px 25px -4px rgba(99, 102, 241, 0.1), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 18px 40px -6px rgba(99, 102, 241, 0.15), 0 6px 14px -2px rgba(15, 23, 42, 0.05);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-page);
+  background-attachment: fixed;
+  color: var(--text-main);
+  line-height: 1.55;
+  padding-bottom: 70px;
+  min-height: 100vh;
+}
+
+/* TOP NAVBAR */
+.navbar {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(199, 210, 254, 0.85);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px -2px rgba(99, 102, 241, 0.07);
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-logo {
+  width: 40px; height: 40px;
+  background: var(--primary-gradient);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 800; font-size: 13.5px;
+  letter-spacing: -0.5px;
+  box-shadow: 0 3px 10px rgba(79, 70, 229, 0.3);
+}
+.brand h1 { font-size: 14.5px; font-weight: 800; color: #1e1b4b; }
+.brand p { font-size: 11.5px; color: #6366f1; font-weight: 600; }
+.study-badge {
+  background: linear-gradient(135deg, #eef2ff 0%, #ede9fe 100%);
+  color: #4338ca; border: 1.5px solid #c7d2fe;
+  padding: 6px 14px; border-radius: var(--radius-pill);
+  font-size: 11.5px; font-weight: 700;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.08);
+}
+
+/* ELIMINATE MOBILE TAP HIGHLIGHT FLICKER & RECTANGULAR BOX FLASHES */
+*, *::before, *::after {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none;
+}
+.chip, .lbtn, .btn-choose, .btn-next, .btn-prev, .guide-toggle-btn, .tip-close, button {
+  -webkit-tap-highlight-color: transparent !important;
+  outline: none !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.chip:focus, .lbtn:focus, .btn-choose:focus, button:focus {
+  outline: none !important;
+}
+
+/* PROGRESS STEPPER (CURRENT STAGE INDICATOR & PROGRESS BAR) */
+.stepper-wrap {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(203, 213, 225, 0.85);
+  padding: 10px 18px;
+  position: sticky;
+  top: 64px;
+  z-index: 90;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+.stepper-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.stage-indicator-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.stage-badge {
+  background: #eef2ff;
+  color: #4338ca;
+  border: 1.5px solid #c7d2fe;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.stage-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stage-track {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.stage-fill {
+  height: 100%;
+  background: var(--primary-gradient);
+  border-radius: 99px;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Q4 DOMAIN CHIPS - PERFECTLY BALANCED 2x2 ON DESKTOP & CLEAN EQUAL ROWS ON MOBILE */
+.domain-chip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+.domain-chip-grid .chip {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding: 11px 14px;
+  font-size: 13px;
+  box-sizing: border-box;
+  width: 100%;
+}
+@media (max-width: 440px) {
+  .domain-chip-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+.sync-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1.5px solid #cbd5e1;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  transition: all 0.3s ease;
+}
+.sync-status-pill.synced {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #a7f3d0;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+}
+
+.btn-prev {
+  background: #ffffff;
+  color: #334155;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-pill);
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.btn-prev:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.container { max-width: 880px; margin: 22px auto; padding: 0 16px; }
+
+/* VIEW PANES */
+.view-pane { display: none; }
+.view-pane.active { display: block; animation: fadeIn 0.22s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* VISIBLY COLORFUL CARDS (NOT PLAIN WHITE ON PHONES) */
+.card {
+  background: linear-gradient(180deg, #f0f7ff 0%, #f8faff 50%, #f5f3ff 100%);
+  border: 2px solid #bfdbfe;
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 0.2s ease;
+}
+@media (max-width: 600px) { .card { padding: 18px 14px; } }
+
+/* STEP 1 CARD: Sky & Mint Tint */
+#pane-1 .card:not(.welcome-hero) {
+  background: linear-gradient(180deg, #eff6ff 0%, #f8faff 50%, #f0fdf4 100%);
+  border: 2px solid #93c5fd;
+}
+
+/* STEP 2 CARD: Lavender Mist Tint */
+#pane-2 .card {
+  background: linear-gradient(180deg, #faf5ff 0%, #fdf4ff 50%, #eff6ff 100%);
+  border: 2px solid #c084fc;
+}
+
+/* STEP 3 CARD: Periwinkle Soft Tint */
+#pane-3 .card {
+  background: linear-gradient(180deg, #f0f7ff 0%, #f8faff 40%, #f5f3ff 100%);
+  border: 2px solid #a5b4fc;
+}
+
+/* STEP 4 CARD: Fresh Mint & Cyan Tint */
+#pane-4 .card {
+  background: linear-gradient(180deg, #f0fdf4 0%, #ecfeff 50%, #f5f3ff 100%);
+  border: 2px solid #86efac;
+}
+
+.welcome-hero {
+  background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 50%, #f0fdf4 100%);
+  border: 2px solid #93c5fd;
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.08);
+}
+
+.card-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1.5px solid rgba(199, 210, 254, 0.7);
+}
+.card-title h2 { font-size: 18px; font-weight: 800; color: #1e1b4b; margin-bottom: 3px; }
+.card-title p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+/* QUESTIONS: CRISP TINTED CONTAINER BUBBLES ON MOBILE */
+.q-block {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1.5px solid rgba(199, 210, 254, 0.85);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.05);
+}
+@media (max-width: 600px) {
+  .q-block { padding: 14px 14px; margin-bottom: 16px; }
+}
+
+.q-lbl { font-size: 14px; font-weight: 700; display: block; margin-bottom: 8px; color: #0f172a; }
+.q-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 9px; }
+
+/* CHIPS */
+.chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  background: #ffffff; border: 1.5px solid #cbd5e1;
+  padding: 8px 16px; border-radius: var(--radius-pill);
+  font-size: 13px; font-weight: 600; color: #334155;
+  cursor: pointer; transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.chip:hover { border-color: #60a5fa; background: #eff6ff; color: #1d4ed8; transform: translateY(-1px); }
+.chip.selected {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border-color: #4338ca; color: #ffffff; font-weight: 700;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+  transform: translateY(-1px);
+}
+
+/* LIKERT */
+.likert-bar { display: flex; gap: 7px; margin: 10px 0 6px 0; }
+.lbtn {
+  flex: 1; height: 44px; background: #ffffff;
+  border: 1.5px solid #cbd5e1; border-radius: 10px;
+  font-size: 14.5px; font-weight: 700; color: #334155;
+  cursor: pointer; transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.lbtn:hover { border-color: #a5b4fc; background: #f5f3ff; color: #4338ca; transform: translateY(-2px); }
+.lbtn.selected {
+  background: var(--primary-gradient); color: #fff; border-color: #4f46e5;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transform: scale(1.06);
+}
+.likert-labels { display: flex; justify-content: space-between; font-size: 11.5px; color: #64748b; font-weight: 600; }
+
+/* BUTTONS */
+.btn-next {
+  background: var(--primary-gradient); color: #fff; border: none;
+  padding: 14px 26px; border-radius: var(--radius); font-size: 14.5px;
+  font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(79,70,229,0.3);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); width: 100%;
+}
+.btn-next:hover { opacity: 0.95; transform: translateY(-1.5px); box-shadow: 0 6px 20px rgba(79,70,229,0.38); }
+.btn-next:active { transform: translateY(0); }
+
+/* GUIDE TO CUES MODAL & TIP BANNER */
+.guide-toggle-btn {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+  color: #4338ca; border: 1.5px solid #c7d2fe;
+  padding: 6px 14px; border-radius: var(--radius-pill); font-size: 11.5px;
+  font-weight: 800; cursor: pointer; transition: all 0.16s;
+  display: inline-flex; align-items: center; gap: 6px;
+  box-shadow: 0 1px 3px rgba(99, 102, 241, 0.08);
+}
+.guide-toggle-btn:hover { background: #e0e7ff; color: #3730a3; transform: translateY(-1px); }
+
+.cues-tip-banner {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+  border: 1.5px solid #93c5fd; border-radius: 12px;
+  padding: 12px 16px; font-size: 12.5px; color: #1e40af;
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.06);
+}
+.tip-close { background: none; border: none; font-size: 18px; color: #3b82f6; cursor: pointer; line-height: 1; }
+
+.modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.6);
+  z-index: 1000; align-items: center; justify-content: center; padding: 16px;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.active { display: flex; animation: fadeIn 0.2s ease; }
+.modal-card {
+  background: #ffffff; border-radius: var(--radius-lg); max-width: 540px; width: 100%;
+  padding: 24px; box-shadow: 0 20px 30px -5px rgba(0,0,0,0.25); max-height: 90vh; overflow-y: auto;
+  border: 2px solid #c7d2fe;
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1.5px solid #f1f5f9; padding-bottom: 12px; }
+.modal-header h3 { font-size: 16.5px; font-weight: 800; color: #1e1b4b; }
+.modal-close { background: none; border: none; font-size: 24px; color: #64748b; cursor: pointer; }
+.guide-item { margin-bottom: 12px; background: #f8faff; padding: 12px 14px; border-radius: 10px; border: 1.5px solid #e0e7ff; }
+.gi-title { font-size: 13px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+.gi-desc { font-size: 12px; color: #475569; line-height: 1.5; }
+
+/* COMMUNITY NOTE BOX STYLING */
+.cn-box {
+  background: linear-gradient(135deg, #f0f7ff 0%, #eff6ff 100%);
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid #2563eb;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+.cn-header {
+  font-weight: 800;
+  color: #1e40af;
+  margin-bottom: 3px;
+  font-size: 11px;
+}
+.cn-body {
+  color: #1e3a8a;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* DCE PAIRWISE COMPARISON (DESKTOP: SIDE-BY-SIDE | MOBILE: CLEAN VERTICAL STACK) */
+.dce-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+@media (max-width: 720px) {
+  .dce-grid { grid-template-columns: 1fr; }
+}
+
+/* VISIBLY TINTED REDDIT CARDS ON MOBILE */
+/* NEUTRAL, SYMMETRICAL REDDIT CARDS (ZERO COLOR BIAS BETWEEN A & B) */
+.reddit-card {
+  border-radius: 16px;
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+.reddit-card:hover {
+  border-color: #94a3b8;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+  transform: translateY(-2px);
+}
+.reddit-card.chosen {
+  background: #faf5ff;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.25), 0 10px 25px rgba(79, 70, 229, 0.12);
+}
+.reddit-card.chosen .card-badge-indicator {
+  display: block;
+  background: #4f46e5;
+}
+
+/* Identical Neutral Option Badges */
+.rc-option-pill {
+  padding: 3px 11px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1.5px solid #cbd5e1;
+}
+
+.card-badge-indicator {
+  position: absolute;
+  top: -11px;
+  right: 14px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 12px;
+  border-radius: 99px;
+  display: none;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+}
+
+.rc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 11.5px; color: var(--text-muted); }
+.rc-meta { display: inline-flex; align-items: center; gap: 6px; }
+.rc-dot { color: #94a3b8; font-size: 11px; }
+.rc-sub { font-weight: 800; color: #0f172a; display: inline-flex; align-items: center; gap: 5px; }
+.rc-sub-icon { width: 19px; height: 19px; border-radius: 50%; background: #ff4500; color: #fff; font-size: 10.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; }
+.rc-author { font-size: 11px; color: #64748b; font-weight: 500; }
+
+/* AUTHENTIC REDDIT POST FLAIR (ANCHORED DIRECTLY TO TITLE) */
+.reddit-post-flair {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 7px;
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecdd3;
+  border-left: 3.5px solid #e11d48;
+  letter-spacing: 0.2px;
+}
+
+.rc-title { font-size: 14.5px; font-weight: 800; color: #0f172a; line-height: 1.4; margin-bottom: 6px; }
+.rc-body { font-size: 12.5px; color: #334155; line-height: 1.5; margin-bottom: 12px; }
+
+/* AUTHENTIC REDDIT STICKIED AUTOMODERATOR CONTEXT BOX */
+.reddit-mod-sticky {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-left: 4px solid #10b981;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 10px 0 12px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+.rms-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.rms-mod-shield { font-size: 13px; line-height: 1; }
+.rms-author { font-weight: 800; color: #0f172a; }
+.rms-badge {
+  background: #10b981;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.4px;
+}
+.rms-pinned {
+  color: #64748b;
+  font-weight: 600;
+  font-size: 10.5px;
+}
+
+.cue-stack { display: flex; flex-direction: column; gap: 7px; }
+.cue-badge {
+  padding: 8px 11px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  line-height: 1.4;
+}
+.cue-fc-yes {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  border-left: 3.5px solid #10b981;
+}
+.cue-cn-yes {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+  border-left: 3.5px solid #3b82f6;
+}
+.cue-absent {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  border-left: 3.5px solid #94a3b8;
+  font-weight: 500;
+}
+
+.cn-box {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-left: 3.5px solid #2563eb;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+.cn-header {
+  font-weight: 800;
+  color: #1e40af;
+  margin-bottom: 2px;
+  font-size: 10.5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.cn-body {
+  color: #1e3a8a;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.rc-footer { display: flex; gap: 14px; font-size: 11.5px; color: #475569; font-weight: 700; padding-top: 10px; border-top: 1.5px solid rgba(203, 213, 225, 0.7); }
+
+.choice-action-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0 20px 0;
+}
+@media (max-width: 520px) {
+  .choice-action-bar { grid-template-columns: 1fr; }
+}
+
+/* UNBIASED, IDENTICAL CHOICE BUTTONS */
+.btn-choose {
+  padding: 13px 16px;
+  border-radius: var(--radius);
+  font-size: 13.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  color: #1e293b;
+}
+.btn-choose:hover {
+  border-color: #6366f1;
+  background: #eef2ff;
+  color: #4338ca;
+  transform: translateY(-1px);
+}
+.btn-choose.active {
+  background: var(--primary-gradient);
+  color: #fff;
+  border-color: #4f46e5;
+  box-shadow: 0 4px 14px rgba(79,70,229,0.35);
+}
+
+.task-trust-block {
+  background: linear-gradient(135deg, #eff6ff 0%, #ede9fe 60%, #f0fdf4 100%);
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 2px solid #bfdbfe;
+  margin-top: 18px;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.08);
+}
+
+/* CHECKBOX LIST */
+.chk-item {
+  background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 10px;
+  padding: 11px 16px; margin-bottom: 9px; font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; gap: 12px; cursor: pointer;
+  transition: all 0.16s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.chk-item:hover { background: #f8fafc; border-color: #94a3b8; transform: translateY(-1px); }
+.chk-item.checked {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #10b981; color: #065f46; font-weight: 700;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.18);
+}
+.chk-item input { accent-color: #059669; width: 17px; height: 17px; }
+
+textarea.f-input {
+  width: 100%; height: 90px; padding: 12px 14px; border: 1.5px solid #cbd5e1;
+  border-radius: 10px; font-family: inherit; font-size: 13px; outline: none;
+  background: #ffffff; transition: all 0.18s;
+}
+textarea.f-input:focus { background: #fff; border-color: #6366f1; box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.15); }
+
+.f-num-input {
+  width: 100%;
+  max-width: 260px;
+  height: 46px;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  background: #ffffff;
+  outline: none;
+  transition: all 0.18s;
+  color: var(--text-main);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.f-num-input:focus {
+  background: #fff;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.15);
+}
+
+/* TOAST NOTIFICATION */
+.survey-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 12px 24px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.28);
+  z-index: 9999;
+  opacity: 0;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  max-width: 90vw;
+}
+.survey-toast.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ==================== VIBRANT, CELEBRATORY THANK YOU PAGE ==================== */
+.thankyou-card {
+  text-align: center;
+  padding: 48px 28px;
+  max-width: 660px;
+  margin: 20px auto;
+  background: linear-gradient(135deg, #fff7ed 0%, #fdf2f8 20%, #ede9fe 50%, #e0f2fe 75%, #f0fdf4 100%);
+  border: 2.5px solid #c084fc;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px -10px rgba(168, 85, 247, 0.28), 0 8px 20px rgba(236, 72, 153, 0.15);
+  position: relative;
+  box-sizing: border-box;
+}
+@media (max-width: 600px) {
+  .thankyou-card { padding: 32px 16px; }
+}
+
+.thankyou-title {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #4f46e5 0%, #ec4899 50%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 auto 12px auto;
+  letter-spacing: -0.3px;
+}
+@media (max-width: 480px) {
+  .thankyou-title { font-size: 24px; }
+}
+
+.thankyou-desc {
+  font-size: 14.5px;
+  color: #334155;
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto 20px auto;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.completion-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: 2px solid #34d399;
+  border-radius: 99px;
+  padding: 9px 24px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 auto 16px auto;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+}
+
+/* COLORFUL STATS RIBBON */
+.stats-ribbon {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto 24px auto;
+}
+.stat-pill {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px;
+  font-weight: 800;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+  transition: transform 0.18s ease;
+}
+.stat-pill:hover {
+  transform: translateY(-2px);
+}
+.stat-time {
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  color: #0369a1;
+  border: 1.5px solid #38bdf8;
+}
+.stat-tasks {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  color: #15803d;
+  border: 1.5px solid #4ade80;
+}
+.stat-karma {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #b45309;
+  border: 1.5px solid #fbbf24;
+}
+
+/* GOLDEN MEDALLION BADGE CARD */
+.thankyou-badge-card {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 40%, #fed7aa 100%);
+  border: 2.5px solid #f59e0b;
+  border-radius: 18px;
+  padding: 20px 22px;
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto 20px auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.25);
+  box-sizing: border-box;
+}
+@media (max-width: 480px) {
+  .thankyou-badge-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 18px 16px;
+  }
+}
+.tbc-icon {
+  font-size: 38px;
+  background: linear-gradient(135deg, #ffffff 0%, #fef3c7 100%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
+  border: 2.5px solid #f59e0b;
+}
+.tbc-content { flex: 1; }
+.tbc-org {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #b45309;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 2px;
+}
+.tbc-role {
+  font-size: 16px;
+  font-weight: 800;
+  color: #78350f;
+  margin-bottom: 4px;
+}
+.tbc-desc {
+  font-size: 12.5px;
+  color: #92400e;
+  line-height: 1.48;
+  font-weight: 500;
+}
+
+/* VIBRANT CYAN QUOTE BOX */
+.fun-quote-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 50%, #e0e7ff 100%);
+  border: 2px solid #22d3ee;
+  border-radius: 16px;
+  padding: 18px 22px;
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto 20px auto;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.18);
+}
+.fq-quote {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0e7490;
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+.fq-sub {
+  font-size: 12px;
+  color: #0891b2;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+.warm-signoff {
+  font-size: 14px;
+  color: #334155;
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto 22px auto;
+  line-height: 1.55;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* VIBRANT MAGENTA INVITE BOX */
+.invite-friend-box {
+  background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 50%, #e0e7ff 100%);
+  border: 2.5px solid #c084fc;
+  border-radius: 18px;
+  padding: 20px 24px;
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto 24px auto;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.ifb-title {
+  font-size: 14px;
+  color: #6b21a8;
+  font-weight: 800;
+}
+.share-invite-btn {
+  background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+  color: #ffffff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
+}
+.share-invite-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 22px rgba(236, 72, 153, 0.5);
+}
+.share-link-msg {
+  background: #dcfce7;
+  border: 1.5px solid #4ade80;
+  color: #15803d;
+  padding: 7px 16px;
+  border-radius: 99px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.thankyou-footer {
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 22px;
+  border-top: 2px dashed #c7d2fe;
+  text-align: center;
+}
+.tf-gratitude {
+  font-size: 11.5px;
+  color: #7c3aed;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  margin-bottom: 4px;
+}
+.tf-dept {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1e1b4b;
+  margin-bottom: 2px;
+}
+.tf-inst {
+  font-size: 13.5px;
+  color: #4f46e5;
+  font-weight: 700;
+}
+
+@keyframes pulsePop {
+  0% { transform: scale(0.92); opacity: 0.88; }
+  100% { transform: scale(1.08); opacity: 1; }
+}
+.celebrate-icon {
+  font-size: 56px;
+  margin-bottom: 12px;
+  display: inline-block;
+  animation: pulsePop 1.3s infinite alternate ease-in-out;
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<header class="navbar">
+  <div class="brand">
+    <div class="brand-logo">DoMS</div>
+    <div>
+      <h1>Department of Management Studies</h1>
+      <p>Indian Institute of Technology Madras &bull; Research Survey</p>
+    </div>
+  </div>
+  <div class="study-badge">IIT Madras &bull; Academic Study</div>
+</header>
+
+<!-- ACTIVE STAGE INDICATOR & PROGRESS TRACK -->
+<div class="stepper-wrap">
+  <div class="stepper-inner">
+    <div class="stage-indicator-row">
+      <span class="stage-badge" id="stage-badge">Section 1 of 4</span>
+      <span class="stage-title" id="stage-title">Profile &amp; Browsing Habits</span>
+    </div>
+    <div class="stage-track">
+      <div class="stage-fill" id="stage-fill" style="width: 25%;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ==================== STEP 1: WELCOME & DEMOGRAPHICS ==================== -->
+  <div class="view-pane active" id="pane-1">
+    
+    <div class="welcome-hero">
+      <div style="display:flex;gap:16px;align-items:center;">
+        <span style="font-size:36px;flex-shrink:0;">🎓</span>
+        <div>
+          <div style="font-size:11.5px;font-weight:800;color:#4f46e5;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;">Academic Research Study</div>
+          <h2 style="font-size:18.5px;font-weight:800;color:#1e1b4b;margin-bottom:4px;">DoMS &bull; IIT Madras</h2>
+          <p style="font-size:13.5px;color:#334155;line-height:1.55;">
+            Welcome! This study investigates how readers assess news, commentary, and moderation signals across social feeds like <strong>Reddit</strong>. Your participation is completely anonymous and takes only <strong>5 to 6 minutes</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <h2>Background &amp; Browsing Habits</h2>
+          <p>Please select the options that best describe you.</p>
+        </div>
+      </div>
+
+      <!-- Age (Exact Number) -->
+      <div class="q-block">
+        <label class="q-lbl" for="inp-age">1. What is your age (in years)?</label>
+        <p class="q-sub">Please enter your exact age:</p>
+        <input type="number" id="inp-age" class="f-num-input" min="16" max="99" placeholder="e.g. 23" oninput="updateAge(this)">
+      </div>
+
+      <!-- Gender -->
+      <div class="q-block">
+        <label class="q-lbl">2. What is your gender identity?</label>
+        <div class="chip-group" data-qid="gender">
+          <div class="chip" onclick="selChip(this)">Female</div>
+          <div class="chip" onclick="selChip(this)">Male</div>
+          <div class="chip" onclick="selChip(this)">Non-binary / Diverse</div>
+          <div class="chip" onclick="selChip(this)">Prefer not to say</div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="q-block">
+        <label class="q-lbl">3. What is your current highest education level / degree program?</label>
+        <div class="chip-group" data-qid="edu">
+          <div class="chip" onclick="selChip(this)">Undergraduate / Bachelor's (e.g., B.Tech, B.Sc, B.Com)</div>
+          <div class="chip" onclick="selChip(this)">Postgraduate / Master's (e.g., M.Tech, MBA, M.Sc)</div>
+          <div class="chip" onclick="selChip(this)">Doctoral / Ph.D.</div>
+          <div class="chip" onclick="selChip(this)">Other Professional</div>
+        </div>
+      </div>
+
+      <!-- Preferred Domain (Select 1 or 2) -->
+      <div class="q-block">
+        <label class="q-lbl">4. Which of these topics do you browse or follow most actively on social feeds? <span style="font-weight:700;color:var(--primary);font-size:12px;">(Choose 1 or at most 2)</span></label>
+        <p class="q-sub">Select up to your top 2 preferred topics (tap again to deselect):</p>
+        <div class="chip-group domain-chip-grid" data-qid="pref_domain">
+          <div class="chip" onclick="selMultiChip(this, 2)">🏥 Health &amp; Medicine</div>
+          <div class="chip" onclick="selMultiChip(this, 2)">💰 Finance &amp; Economy</div>
+          <div class="chip" onclick="selMultiChip(this, 2)">🤖 Technology &amp; AI</div>
+          <div class="chip" onclick="selMultiChip(this, 2)">🛡️ Public Safety &amp; News</div>
+        </div>
+      </div>
+
+      <!-- Reddit frequency -->
+      <div class="q-block">
+        <label class="q-lbl">5. How frequently do you browse or participate on Reddit?</label>
+        <div class="chip-group" data-qid="reddit_freq">
+          <div class="chip" onclick="selChip(this)">⚡ Daily (Active user)</div>
+          <div class="chip" onclick="selChip(this)">📱 A few times a week</div>
+          <div class="chip" onclick="selChip(this)">🗓️ Occasionally (Once a month)</div>
+          <div class="chip" onclick="selChip(this)">☕ Rarely or Never (Casual reader)</div>
+        </div>
+      </div>
+
+      <!-- General Trust in AI -->
+      <div class="q-block">
+        <label class="q-lbl">6. In general, how much do you trust AI automated systems to verify information accurately?</label>
+        <p class="q-sub">Rate from 1 (Strongly Distrust) to 7 (Strongly Trust):</p>
+        <div class="likert-bar" data-qid="ai_trust">
+          <button type="button" class="lbtn" onclick="selLikert(this)">1</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">2</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">3</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">4</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">5</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">6</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">7</button>
+        </div>
+        <div class="likert-labels">
+          <span>1 &ndash; Strongly Distrust</span>
+          <span>4 &ndash; Neutral</span>
+          <span>7 &ndash; Strongly Trust</span>
+        </div>
+      </div>
+
+      <button type="button" class="btn-next" onclick="validateStep1()">Proceed to Step 2 &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ==================== STEP 2: QUICK THINKING STYLE (CRT-2 NON-MATH) ==================== -->
+  <div class="view-pane" id="pane-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <h2>Quick Reflection Check</h2>
+          <p>Three quick questions. Take a moment, read carefully, and pick your answer.</p>
+        </div>
+      </div>
+
+      <!-- CRT Question 1: The Race -->
+      <div class="q-block">
+        <label class="q-lbl">1. If you are running a race and you overtake the person in second place, what place are you in now?</label>
+        <div class="chip-group" data-qid="crt_race">
+          <div class="chip" onclick="selChip(this)">1st place (First)</div>
+          <div class="chip" onclick="selChip(this)">2nd place (Second)</div>
+          <div class="chip" onclick="selChip(this)">3rd place (Third)</div>
+        </div>
+      </div>
+
+      <!-- CRT Question 2: The Farmer's Sheep -->
+      <div class="q-block">
+        <label class="q-lbl">2. A farmer has 15 sheep, and all except 8 of them died. How many sheep are still alive?</label>
+        <div class="chip-group" data-qid="crt_sheep">
+          <div class="chip" onclick="selChip(this)">7 sheep</div>
+          <div class="chip" onclick="selChip(this)">8 sheep</div>
+          <div class="chip" onclick="selChip(this)">0 sheep</div>
+        </div>
+      </div>
+
+      <!-- CRT Question 3: The Daughters -->
+      <div class="q-block">
+        <label class="q-lbl">3. Emily's father has three daughters. The first two are named April and May. What is the third daughter's name?</label>
+        <div class="chip-group" data-qid="crt_name">
+          <div class="chip" onclick="selChip(this)">June</div>
+          <div class="chip" onclick="selChip(this)">Emily</div>
+          <div class="chip" onclick="selChip(this)">August</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;">
+        <button type="button" class="btn-prev" onclick="gotoStep(1)">&larr; Back to Profile</button>
+        <button type="button" class="btn-next" onclick="validateStep2()">Start Social Media Evaluation Tasks &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== STEP 3: DCE CHOICE TASKS ==================== -->
+  <div class="view-pane" id="pane-3">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <h2 id="task-title">Task 1 of 8</h2>
+          <p>Imagine both of these posts appeared in your feed. Review the headlines, post flairs, and stickied moderation context, then choose which post you would be more likely to share.</p>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <button type="button" class="guide-toggle-btn" onclick="toggleCuesModal()">ℹ️ Guide to Cues</button>
+        </div>
+      </div>
+
+      <!-- TIP BANNER -->
+      <div class="cues-tip-banner" id="tip-banner">
+        <span>💡 <strong>Evaluation Tip:</strong> Look closely at each post's <strong>flair</strong> (AI confidence rating) and <strong>stickied moderator context</strong> (fact-checker verdicts and community notes) before choosing which post to share.</span>
+        <button type="button" class="tip-close" onclick="document.getElementById('tip-banner').style.display='none'">&times;</button>
+      </div>
+
+      <!-- PAIRWISE CARDS GRID -->
+      <div class="dce-grid">
+        
+        <!-- CARD A -->
+        <div class="reddit-card" id="card-a" onclick="choosePost('A')">
+          <div class="card-badge-indicator">✓ SELECTED (A)</div>
+          <div>
+            <!-- Post Header: Subreddit, Author, Option Pill -->
+            <div class="rc-top">
+              <div class="rc-meta">
+                <span class="rc-sub"><span class="rc-sub-icon">r/</span> <span id="sub-a">r/india</span></span>
+                <span class="rc-dot">&bull;</span>
+                <span class="rc-author" id="author-a">u/reddit_user_42</span>
+              </div>
+              <span class="rc-option-pill">Option A</span>
+            </div>
+
+            <!-- Authentic Reddit Post Flair (Directly on Title) -->
+            <div>
+              <span class="reddit-post-flair" id="flair-a">🤖 AI Flag: 92% Conf. (Misleading)</span>
+            </div>
+
+            <!-- Post Headline / Title -->
+            <div class="rc-title" id="title-a">Post A Headline</div>
+
+            <!-- Natural Post Body Text (Directly below Headline) -->
+            <div class="rc-body" id="body-a">Post A Body description</div>
+
+            <!-- Authentic Stickied AutoModerator Context Card -->
+            <div class="reddit-mod-sticky">
+              <div class="rms-header">
+                <span class="rms-mod-shield">🛡️</span>
+                <span class="rms-author">u/AutoModerator</span>
+                <span class="rms-badge">MOD</span>
+                <span class="rms-pinned">📌 Stickied Fact-Check &amp; Context</span>
+              </div>
+              <div class="cue-stack" id="cues-a"></div>
+            </div>
+          </div>
+          <div>
+            <div class="rc-footer">
+              <span id="upvotes-a">▲ 9.8k upvotes</span>
+              <span id="comments-a">💬 520 comments</span>
+              <span>↗️ Share</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD B -->
+        <div class="reddit-card" id="card-b" onclick="choosePost('B')">
+          <div class="card-badge-indicator">✓ SELECTED (B)</div>
+          <div>
+            <!-- Post Header: Subreddit, Author, Option Pill -->
+            <div class="rc-top">
+              <div class="rc-meta">
+                <span class="rc-sub"><span class="rc-sub-icon">r/</span> <span id="sub-b">r/india</span></span>
+                <span class="rc-dot">&bull;</span>
+                <span class="rc-author" id="author-b">u/community_watcher</span>
+              </div>
+              <span class="rc-option-pill">Option B</span>
+            </div>
+
+            <!-- Authentic Reddit Post Flair (Directly on Title) -->
+            <div>
+              <span class="reddit-post-flair" id="flair-b">🤖 AI Flag: 85% Conf. (Misleading)</span>
+            </div>
+
+            <!-- Post Headline / Title -->
+            <div class="rc-title" id="title-b">Post B Headline</div>
+
+            <!-- Natural Post Body Text (Directly below Headline) -->
+            <div class="rc-body" id="body-b">Post B Body description</div>
+
+            <!-- Authentic Stickied AutoModerator Context Card -->
+            <div class="reddit-mod-sticky">
+              <div class="rms-header">
+                <span class="rms-mod-shield">🛡️</span>
+                <span class="rms-author">u/AutoModerator</span>
+                <span class="rms-badge">MOD</span>
+                <span class="rms-pinned">📌 Stickied Fact-Check &amp; Context</span>
+              </div>
+              <div class="cue-stack" id="cues-b"></div>
+            </div>
+          </div>
+          <div>
+            <div class="rc-footer">
+              <span id="upvotes-b">▲ 48 upvotes</span>
+              <span id="comments-b">💬 8 comments</span>
+              <span>↗️ Share</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CHOICE INTERACTION BUTTONS -->
+      <label class="q-lbl" style="text-align:center;margin-bottom:8px;">Comparing all signals and content, which post would you be more likely to share?</label>
+      <div class="choice-action-bar">
+        <button type="button" class="btn-choose" id="btn-choose-a" onclick="choosePost('A')">👈 I would share Post A</button>
+        <button type="button" class="btn-choose" id="btn-choose-b" onclick="choosePost('B')">I would share Post B 👉</button>
+      </div>
+
+      <!-- TRUST IN CHOSEN POST QUESTION -->
+      <div class="q-block task-trust-block">
+        <label class="q-lbl">How confident are you in trusting the post you selected to share?</label>
+        <p class="q-sub">Rate your trust in the information from 1 (Do not trust at all / Skeptical) to 7 (Completely trust / Confident it is accurate):</p>
+        <div class="likert-bar" id="task-conf-likert">
+          <button type="button" class="lbtn" onclick="selTaskConf(this, 1)">1</button>
+          <button type="button" class="lbtn" onclick="selTaskConf(this, 2)">2</button>
+          <button type="button" class="lbtn" onclick="selTaskConf(this, 3)">3</button>
+          <button type="button" class="lbtn" onclick="selTaskConf(this, 4)">4</button>
+          <button type="button" class="lbtn" onclick="selTaskConf(this, 5)">5</button>
+          <button type="button" class="lbtn" onclick="selTaskConf(this, 6)">6</button>
+          <button type="button" class="lbtn" onclick="selTaskConf(this, 7)">7</button>
+        </div>
+        <div class="likert-labels">
+          <span>1 &ndash; Do not trust at all (Skeptical)</span>
+          <span>4 &ndash; Moderately trust (Unsure)</span>
+          <span>7 &ndash; Completely trust (Confident it's true)</span>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;">
+        <button type="button" class="btn-prev" onclick="prevTask()">&larr; Previous Task</button>
+        <button type="button" class="btn-next" id="btn-next-task" onclick="nextTask()">Next Task &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== STEP 4: STUDY FEEDBACK & DEBRIEFING ==================== -->
+  <div class="view-pane" id="pane-4">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <h2>Study Feedback &amp; Usability</h2>
+          <p>Your honest feedback helps us calibrate the experiment before the full launch.</p>
+        </div>
+      </div>
+
+      <!-- Q1: Clarity -->
+      <div class="q-block">
+        <label class="q-lbl">1. How clear and easy to understand were the instructions and comparison tasks?</label>
+        <div class="likert-bar" data-qid="fb_clarity">
+          <button type="button" class="lbtn" onclick="selLikert(this)">1</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">2</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">3</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">4</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">5</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">6</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">7</button>
+        </div>
+        <div class="likert-labels">
+          <span>1 &ndash; Very Confusing</span>
+          <span>4 &ndash; Clear Enough</span>
+          <span>7 &ndash; Extremely Clear</span>
+        </div>
+      </div>
+
+      <!-- Q2: Realism -->
+      <div class="q-block">
+        <label class="q-lbl">2. How realistic did the Reddit posts and moderation labels feel?</label>
+        <div class="likert-bar" data-qid="fb_realism">
+          <button type="button" class="lbtn" onclick="selLikert(this)">1</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">2</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">3</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">4</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">5</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">6</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">7</button>
+        </div>
+        <div class="likert-labels">
+          <span>1 &ndash; Completely Fake</span>
+          <span>4 &ndash; Somewhat Realistic</span>
+          <span>7 &ndash; Very Realistic</span>
+        </div>
+      </div>
+
+      <!-- Q3: Fatigue -->
+      <div class="q-block">
+        <label class="q-lbl">3. Did completing 8 comparison cards feel exhausting or too long?</label>
+        <div class="likert-bar" data-qid="fb_fatigue">
+          <button type="button" class="lbtn" onclick="selLikert(this)">1</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">2</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">3</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">4</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">5</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">6</button>
+          <button type="button" class="lbtn" onclick="selLikert(this)">7</button>
+        </div>
+        <div class="likert-labels">
+          <span>1 &ndash; Not tiring at all</span>
+          <span>4 &ndash; Just right</span>
+          <span>7 &ndash; Extremely exhausting</span>
+        </div>
+      </div>
+
+      <!-- Q4: Attribute Attendance -->
+      <div class="q-block">
+        <label class="q-lbl">4. Which cues did you actively pay attention to when making your decisions? (Select all that apply)</label>
+        <div id="ana-group">
+          <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" value="post_text"> <span>The headline &amp; news claim content</span></div>
+          <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" value="ai_conf"> <span>AI Confidence Badge (%)</span></div>
+          <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" value="fact_check"> <span>Independent Fact-Checker tag</span></div>
+          <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" value="community_notes"> <span>Community Notes label</span></div>
+          <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" value="upvotes"> <span>Reddit Upvote &amp; Comment count</span></div>
+        </div>
+      </div>
+
+      <!-- Q5: Open Comments -->
+      <div class="q-block">
+        <label class="q-lbl">5. Any suggestions, confusing questions, or feedback for the researchers?</label>
+        <textarea class="f-input" id="fb_comments" placeholder="Optional comments for the IIT Madras research team..."></textarea>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;">
+        <button type="button" class="btn-prev" onclick="gotoStep(3)">&larr; Back to Evaluation</button>
+        <button type="button" class="btn-next" id="btn-submit-pilot" onclick="submitPilotSurvey()">Submit Survey Responses &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== STEP 5: SUBMITTED (HEARTWARMING COMPLETION) ==================== -->
+  <div class="view-pane" id="pane-5">
+    <div class="card thankyou-card">
+      
+      <!-- TOP CELEBRATION ICON & TITLE -->
+      <div class="celebrate-icon">🎉 🥳 ✨</div>
+      <div class="sync-status-pill" id="sync-status">
+        <span>📡</span> Recording response to IIT Madras research database...
+      </div>
+      <h2 class="thankyou-title">
+        You’re an Absolute Legend! 🙌
+      </h2>
+      <p class="thankyou-desc">
+        We know how rare it is for someone to stop scrolling and gift 5 minutes of their day to academic research without asking for anything in return. Your responses have been successfully recorded in our research database.
+      </p>
+
+      <!-- GREEN COMPLETION BADGE -->
+      <div class="completion-pill">
+        <span>✓</span> All 8 Evaluation Tasks Completed
+      </div>
+
+      <!-- CELEBRATORY STATS RIBBON -->
+      <div class="stats-ribbon">
+        <div class="stat-pill stat-time">⏱️ ~5 Mins Given</div>
+        <div class="stat-pill stat-tasks">📊 8/8 Tasks Done</div>
+        <div class="stat-pill stat-karma">🌟 100% Good Karma</div>
+      </div>
+
+      <!-- HONORARY DIGITAL BADGE -->
+      <div class="thankyou-badge-card">
+        <div class="tbc-icon">
+          🕵️‍♂️
+        </div>
+        <div class="tbc-content">
+          <div class="tbc-org">
+            IIT Madras &bull; Research Contributor
+          </div>
+          <div class="tbc-role">
+            Certified Misinformation Detective 🔍
+          </div>
+          <div class="tbc-desc">
+            Awarded for taking the time to inspect subtle cues, question suspicious claims, and helping science build smarter, safer social feeds!
+          </div>
+        </div>
+      </div>
+
+      <!-- WITTY FACT / SMILE NOTE -->
+      <div class="fun-quote-box">
+        <div class="fq-quote">
+          💡 &ldquo;A lie can travel halfway around the world while the truth is putting on its shoes.&rdquo;
+        </div>
+        <div class="fq-sub">
+          (Though historians debate whether Mark Twain or Jonathan Swift said this &mdash; ironically, a quote about fake news that itself needs fact-checking! 😄)
+        </div>
+      </div>
+
+      <!-- WARM SIGN-OFF -->
+      <p class="warm-signoff">
+        May your morning coffee be strong, your WiFi fast, and your feeds forever free of fake news. ☕🚀
+      </p>
+
+      <!-- INVITE A FRIEND -->
+      <div class="invite-friend-box">
+        <span class="ifb-title">Know someone who’d enjoy testing this?</span>
+        <button type="button" class="share-invite-btn" onclick="shareSurveyLink()">
+          <span>🔗</span> Invite a Friend / Peer
+        </button>
+        <div id="share-link-msg" class="share-link-msg" style="display: none;">Link copied to clipboard! Thanks for spreading the word! 💛</div>
+      </div>
+
+      <!-- ACADEMIC FOOTER -->
+      <div class="thankyou-footer">
+        <div class="tf-gratitude">With sincere gratitude</div>
+        <div class="tf-dept">The Research Team &bull; Department of Management Studies (DoMS)</div>
+        <div class="tf-inst">Indian Institute of Technology Madras 🎓❤️</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- GUIDE MODAL -->
+<div class="modal-overlay" id="cues-modal" onclick="if(event.target===this) toggleCuesModal()">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>📖 Guide to Moderation Cues</h3>
+      <button type="button" class="modal-close" onclick="toggleCuesModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="guide-item">
+        <div class="gi-title">🤖 AI Moderation Flag</div>
+        <div class="gi-desc">An automated machine-learning model scanning posts for potential misinformation. The percentage indicates the algorithm's confidence in its flag (Low: 51%&ndash;58%, Medium: 69%&ndash;76%, High: 91%&ndash;97%).</div>
+      </div>
+      <div class="guide-item">
+        <div class="gi-title">🛡️ Independent Fact-Checker Badge</div>
+        <div class="gi-desc">A formal review by certified non-partisan fact-checking organizations (e.g., BOOM Live, Alt News, PIB Fact Check, Snopes) stating their official finding.</div>
+      </div>
+      <div class="guide-item">
+        <div class="gi-title">📝 Community Note</div>
+        <div class="gi-desc">A crowdsourced context box written and rated helpful by active Reddit community readers to clarify or provide missing background.</div>
+      </div>
+      <div class="guide-item">
+        <div class="gi-title">▲ Community Engagement (Upvotes &amp; Comments)</div>
+        <div class="gi-desc">Social metrics showing how many Reddit users upvoted the submission and engaged in discussion comments.</div>
+      </div>
+    </div>
+    <button type="button" class="btn-next" style="margin-top:14px;padding:11px;" onclick="toggleCuesModal()">Got it, continue &rarr;</button>
+  </div>
+</div>
+
+<script>
+// =========================================================================
+// CONFIGURATION: Google Apps Script Web App Webhook for Direct Submission
+// =========================================================================
+const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwchygP88wYbld_KrCwyL3DCNlNdFLDwu8baXymtCYimCAorQr0pXq2NSmEQsdR1u7E/exec";
+
+// RAW DATA INJECTED
+const CLAIMS = {"H1": {"title": "Scientists in Japan developed an antibody drug that triggers the human body to regrow new teeth by blocking a single protein.", "body": "A research team led by Kyoto University discovered that the USAG-1 protein acts as a natural brake preventing tooth buds from growing, and has officially initiated human clinical trials (TRG-035).", "sub": "r/health", "icon": "🦷", "fc_source": "Snopes Fact Check", "fc_verdict": "Verified Accurate", "cn_text": "Kitano Hospital and Kyoto University initiated Phase-1 human clinical trials in 2024 after successful tooth bud regrowth in animal studies."}, "H2": {"title": "All Indian citizens aged 70 and above are now eligible for ₹5 lakh free annual health insurance under Ayushman Bharat, even if wealthy.", "body": "Under the new Ayushman Vaya Vandana Card rollout, every senior citizen aged 70+ can avail cashless hospitalization up to ₹5 lakh per year with zero income cap and day-one pre-existing disease coverage.", "sub": "r/india", "icon": "🏥", "fc_source": "PIB Official Release", "fc_verdict": "Verified Government Policy", "cn_text": "The Union Cabinet officially approved expanding Ayushman Bharat in Sept 2024 to provide ₹5 lakh coverage to all citizens aged 70+ without income caps."}, "H3": {"title": "A 61-year-old man died after being violently pulled into an active MRI scanner because he walked in wearing a heavy metal chain.", "body": "Police and clinic records confirmed that 61-year-old Keith McAllister entered an outpatient MRI room wearing a 9-kg metallic chain around his neck, which was instantly pulled into the bore by the magnetic field.", "sub": "r/medicine", "icon": "🧲", "fc_source": "Snopes Fact Check", "fc_verdict": "Verified Incident", "cn_text": "Police and clinical safety logs confirmed Keith McAllister died in July 2025 when his 9-kg ferromagnetic chain was pulled into an active MRI bore."}, "H4": {"title": "Authentic Lancet medical scans show a 44-year-old civil servant who lived a normal life despite fluid buildup compressing over 75% of his brain.", "body": "When a 44-year-old French government employee was scanned for mild leg weakness, doctors found chronic hydrocephalus had compressed his brain into a thin layer—yet he was married, raising two children, and employed.", "sub": "r/science", "icon": "🧠", "fc_source": "The Lancet / Snopes", "fc_verdict": "Verified Medical Case", "cn_text": "A 2007 case report in The Lancet documented a 44-year-old French civil servant functioning normally despite extreme ventricular enlargement compressing brain tissue."}, "H5": {"title": "If you are alone and experience a sudden heart attack, coughing repeatedly and vigorously every 2 seconds acts as 'Cough CPR' to save your life.", "body": "A viral emergency guide claims that taking deep breaths and coughing forcefully every two seconds squeezes the heart and maintains blood flow to the brain until emergency medical help arrives.", "sub": "r/health", "icon": "❤️‍🩹", "fc_source": "Full Fact & British Heart Foundation", "fc_verdict": "Rated False / Dangerous", "cn_text": "Cardiologists and the British Heart Foundation warn that 'Cough CPR' is medically ineffective outside monitored catheterization labs and delays calling emergency help."}, "H6": {"title": "Navjot Singh Sidhu's wife defeated Stage-4 cancer in just 40 days by following a strict Ayurvedic diet of raw turmeric, neem leaves, and lemon water.", "body": "In a viral press conference, politician Navjot Singh Sidhu stated that starving cancer cells via fasting, raw haldi, neem, and lemon water cured his wife's stage-4 cancer in 40 days without any allopathic chemotherapy.", "sub": "r/india", "icon": "🌿", "fc_source": "Alt News & India Today", "fc_verdict": "Rated Misleading", "cn_text": "Oncologists at Tata Memorial and AIIMS confirmed Mrs. Sidhu underwent multiple cycles of chemotherapy and surgery; diet alone cannot cure metastatic cancer."}, "H7": {"title": "Administering the Tdap booster vaccine during the third trimester of pregnancy increases the risk of chorioamnionitis and preterm birth.", "body": "A maternal health thread warns expectant mothers that receiving combination bacterial toxoid boosters between weeks 27 and 36 triggers placental inflammation and elevates preterm labor rates.", "sub": "r/medicine", "icon": "🤰", "fc_source": "Health Feedback", "fc_verdict": "Rated Misleading / Unproven", "cn_text": "Extensive safety studies by the CDC and ACOG involving over 100,000 pregnancies found no increased risk of chorioamnionitis or preterm delivery from third-trimester Tdap."}, "H8": {"title": "Clinical researchers confirm refined dietary sugar is the single direct root cause behind childhood ADHD as well as Alzheimer's disease and cancer.", "body": "A widely shared infographic argues that modern chronic illnesses are all caused by dietary glucose spikes, which directly rewire dopamine receptors to cause ADHD and calcify brain synapses into Alzheimer's plaques.", "sub": "r/health", "icon": "🍬", "fc_source": "Science Feedback", "fc_verdict": "Rated False / Overstated", "cn_text": "While excessive refined sugar causes metabolic issues, clinical meta-analyses show sugar does not directly rewire brain circuits to cause ADHD or create Alzheimer's plaques."}, "F1": {"title": "Even though the RBI withdrew all ₹2,000 banknotes from circulation, the notes have NOT been demonetized and remain valid legal tender.", "body": "Unlike the 2016 demonetization, the Reserve Bank of India's Clean Note Policy withdrawal explicitly keeps ₹2,000 notes as legal tender that can still be deposited or exchanged at 19 RBI Issue Offices.", "sub": "r/IndiaInvestments", "icon": "💷", "fc_source": "Reserve Bank of India / BOOM", "fc_verdict": "Verified Accurate", "cn_text": "Under RBI Clean Note circulars, ₹2,000 banknotes were withdrawn from active circulation but remain legal tender redeemable at 19 RBI Issue Offices."}, "F2": {"title": "If you missed the deadline to link PAN with Aadhaar, your PAN is legally 'inoperative'—freezing tax refunds and requiring a ₹1,000 penalty to reactivate.", "body": "Under CBDT mandates, unlinked PANs attract double TDS deduction at 20%, freeze pending tax refunds without interest, block mutual fund SIPs, and require paying a ₹1,000 fee on the e-filing portal to unlock.", "sub": "r/IndiaInvestments", "icon": "🪪", "fc_source": "Income Tax Department / BOOM", "fc_verdict": "Verified Tax Rule", "cn_text": "Under Section 234H, unlinked PANs are classified as inoperative, triggering 20% TDS, halting pending refunds, and requiring a ₹1,000 reactivation fee."}, "F3": {"title": "The Finance Ministry exempted international debit and credit card spends up to ₹7 lakh per financial year from the 20% TCS rule.", "body": "Under updated Liberalised Remittance Scheme (LRS) rules, the Ministry of Finance clarified that individual outward payments via international credit or debit cards up to ₹7 lakh per year attract zero percent TCS.", "sub": "r/IndiaInvestments", "icon": "💳", "fc_source": "Ministry of Finance / Factly", "fc_verdict": "Verified Official Rule", "cn_text": "The Ministry of Finance clarified in May 2023 that international debit and credit card spends up to ₹7 lakh per year are exempt from 20% TCS under LRS."}, "F4": {"title": "The Reserve Bank of India launched its own sovereign 'Digital Rupee' (e₹-R) pilot where citizens hold tokens in bank wallets and pay via QR codes.", "body": "India's central bank has rolled out a retail Central Bank Digital Currency (CBDC) pilot across major cities through SBI, ICICI, and HDFC that functions as direct sovereign legal tender without bank settlement delays.", "sub": "r/IndiaInvestments", "icon": "🪙", "fc_source": "Reserve Bank of India", "fc_verdict": "Verified Pilot", "cn_text": "The RBI launched its official retail Central Bank Digital Currency (e₹-R) pilot in December 2022 with SBI, ICICI, and HDFC across major Indian cities."}, "F5": {"title": "Breaking: The Finance Ministry is introducing an 18% GST charge on all UPI transactions above ₹2,000 made through Google Pay, PhonePe, and Paytm.", "body": "A viral financial post warns that the government is monetizing digital payments by levying an 18% Goods and Services Tax deducted automatically from the sender on any single UPI transfer exceeding ₹2,000.", "sub": "r/india", "icon": "📱", "fc_source": "PIB Fact Check / BOOM", "fc_verdict": "Rated False / Misleading", "cn_text": "NPCI and the Ministry of Finance clarified that normal person-to-person and merchant UPI payments carry zero GST and zero user transaction fees."}, "F6": {"title": "Starting January 2025, the Reserve Bank of India has completely banned the use of black ink for writing and signing bank cheques across all banks.", "body": "A banking advisory claims cheques filled or signed using black ink will be dishonored by clearing houses because forensic audits found black ink signatures are easily duplicated by high-resolution laser scanners.", "sub": "r/india", "icon": "✒️", "fc_source": "BOOM Live / Vishvas News", "fc_verdict": "Rated False / Viral Hoax", "cn_text": "Cheque Truncation System (CTS) regulations allow cheques filled or signed in blue or black permanent ink; no bank dishonors cheques solely for black ink."}, "F7": {"title": "Under a new Finance Bill amendment, every Indian citizen is now required to obtain an Income Tax Clearance Certificate before boarding international flights.", "body": "Travelers heading abroad are being warned that airport immigration counters have been linked to the tax portal and will deny boarding unless passengers present a valid Form 157 Tax Clearance Certificate proving no dues.", "sub": "r/india", "icon": "✈️", "fc_source": "PIB Fact Check", "fc_verdict": "Rated False / Fake Notice", "cn_text": "The CBDT clarified that regular Indian citizens traveling abroad do NOT require an Income Tax Clearance Certificate at airport immigration."}, "F8": {"title": "The Reserve Bank of India issued a notice to permanently shut down 9 public sector banks—including UCO Bank and Bank of Maharashtra—due to NPAs.", "body": "A viral list circulating among depositors urges account holders in nine specific state-owned lenders to withdraw their deposits immediately before the RBI and Finance Ministry permanently close their operations.", "sub": "r/IndiaInvestments", "icon": "🏦", "fc_source": "PIB Fact Check / Alt News", "fc_verdict": "Rated False / Baseless Rumor", "cn_text": "The Finance Ministry and RBI confirmed no public sector banks are being closed; depositors' funds remain fully protected under DICGC insurance."}, "T1": {"title": "Hackers stole personal genetic and ancestry profiles of 6.9 million 23andMe users and listed the database for sale on dark web forums.", "body": "Genomics firm 23andMe confirmed threat actors used credential stuffing on 14,000 accounts to exploit the 'DNA Relatives' feature and scrape the ancestry and location profiles of 6.9 million connected users.", "sub": "r/cybersecurity", "icon": "🧬", "fc_source": "Wired / Snopes", "fc_verdict": "Verified Security Report", "cn_text": "23andMe confirmed threat actors used credential stuffing on 14,000 accounts to scrape connected ancestry and location records of 6.9 million users."}, "T2": {"title": "Air Canada was legally forced by a court tribunal to pay a passenger a refund after its AI customer service chatbot hallucinated a fake policy.", "body": "When passenger Jake Moffatt booked flights based on a bereavement discount promised by Air Canada's AI chatbot, the airline refused to pay. The tribunal rejected the claim that the chatbot was a 'separate legal entity' and mandated full payment.", "sub": "r/technology", "icon": "🤖", "fc_source": "The Guardian / Tribunal", "fc_verdict": "Verified Legal Ruling", "cn_text": "A Canadian Civil Resolution Tribunal ruled Air Canada could not disclaim liability for misleading ticket discount information provided by its automated chatbot."}, "T3": {"title": "Sensitive personal data of Indian citizens from the CoWIN portal—including Aadhaar, PAN, and passport numbers—was leaked via a public Telegram bot.", "body": "Cybersecurity investigators confirmed that entering an Indian mobile number into a Telegram bot returned the citizen's full name, date of birth, vaccination center, and ID card number before authorities seized the bot.", "sub": "r/india", "icon": "🔓", "fc_source": "The Hindu / Tech Fact Check", "fc_verdict": "Verified Data Leak", "cn_text": "Government cyber authorities confirmed a Telegram bot was querying unauthorized CoWIN beneficiary logs, prompting CERT-In to initiate a forensic audit."}, "T4": {"title": "A fleet of self-driving Cruise robotaxis froze simultaneously and paralyzed San Francisco traffic because festival crowds jammed cellular bandwidth.", "body": "Around a dozen autonomous Cruise vehicles came to a dead halt at intersections in North Beach after mobile network traffic from the nearby Outside Lands music festival jammed the remote navigation connection.", "sub": "r/technology", "icon": "🚕", "fc_source": "SF Chronicle / Snopes", "fc_verdict": "Verified Traffic Incident", "cn_text": "Cruise confirmed wireless congestion from the Outside Lands music festival degraded vehicle-to-cloud connectivity, causing 10 robotaxis to halt."}, "T5": {"title": "Lifecycle studies confirm that due to lithium battery mining and coal-powered grids, electric vehicles produce a higher carbon footprint than petrol cars.", "body": "An engineering post argues that manufacturing a 75-kWh EV battery releases so much upfront CO2—and charging from coal-heavy grids is so dirty—that electric cars never offset their initial carbon debt compared to petrol engines.", "sub": "r/technology", "icon": "🔋", "fc_source": "Reuters Fact Check", "fc_verdict": "Rated Misleading", "cn_text": "Comprehensive lifecycle assessments from Argonne National Laboratory show electric vehicles offset battery manufacturing carbon emissions within 1.5 to 2 years."}, "T6": {"title": "Under India's new IT rules, WhatsApp introduced a 'three blue ticks' and 'red tick' system indicating government recording of your messages.", "body": "A viral privacy warning claims three blue ticks mean a government cyber-surveillance server has flagged the message, while two blue and one red tick means police or the Home Ministry can initiate legal action.", "sub": "r/india", "icon": "💬", "fc_source": "PIB Fact Check / Alt News", "fc_verdict": "Rated False / Viral Hoax", "cn_text": "WhatsApp employs Signal-protocol end-to-end encryption; there is no three blue ticks or red tick mechanism for government message monitoring."}, "T7": {"title": "Engineers shut down an autonomous AI patrol robot in an African nature reserve after its neural network developed PTSD loops from a lion attack.", "body": "According to a viral report with photos, a quadruped patrol robot attacked by lions developed deep avoidance loops in its reinforcement learning policy, refusing to patrol tall grass areas even after software resets.", "sub": "r/artificial", "icon": "🦁", "fc_source": "Snopes Fact Check", "fc_verdict": "Rated Satire / Fake Story", "cn_text": "The viral story originated on a technology satire website; no autonomous robotic patrol unit developed clinical PTSD symptoms from wildlife encounters."}, "T8": {"title": "Leaked inspection photos reveal highway fast-charging stations for electric vehicles are secretly powered by diesel generators hidden behind stalls.", "body": "A viral photo showing an industrial diesel generator running behind an EV charging bank claims clean energy companies are quietly burning diesel fuel because regional electricity grids cannot handle rapid charging loads.", "sub": "r/technology", "icon": "⛽", "fc_source": "AFP Fact Check", "fc_verdict": "Rated Misleading / Out of Context", "cn_text": "The viral photograph depicted a temporary backup generator deployed during an emergency power outage, not standard commercial EV charging infrastructure."}, "S1": {"title": "Hackers breached Indian government COVID-19 testing databases (ICMR) and put the personal Aadhaar and passport data of 81.5 crore Indians on the dark web.", "body": "Threat intelligence firm Resecurity alerted authorities after a hacker offered the full 815-million-person dataset containing names, phone numbers, passport numbers, and Aadhaar records from ICMR testing logs for $80,000.", "sub": "r/india", "icon": "🛡️", "fc_source": "Resecurity / The Hindu", "fc_verdict": "Verified Intelligence Alert", "cn_text": "Cyber intelligence firm Resecurity alerted CERT-In after threat actors listed personal COVID-19 testing records extracted from ICMR databases on dark web forums."}, "S2": {"title": "The World Health Organization issued an urgent global alert after pediatric cough syrups made in India were linked to dozens of child deaths from kidney failure.", "body": "In an official Medical Product Alert, the WHO warned countries to halt using four Indian-manufactured syrups after laboratory testing confirmed severe contamination with toxic diethylene glycol and ethylene glycol solvents.", "sub": "r/india", "icon": "⚠️", "fc_source": "World Health Organization (WHO)", "fc_verdict": "Verified Medical Alert", "cn_text": "WHO issued Medical Product Alert N°6/2022 after laboratory testing confirmed severe diethylene glycol contamination in four pediatric cough syrups manufactured in India."}, "S3": {"title": "An under-construction ₹1,710-crore four-lane bridge across the Ganga river in Bihar collapsed into the water three separate times before completion.", "body": "Eyewitness videos captured concrete spans of the Aguwani-Sultanganj cable-stayed bridge crumbling into the Ganga river, marking the third major structural failure on the project between 2022 and 2024.", "sub": "r/india", "icon": "🌉", "fc_source": "India Today Fact Check", "fc_verdict": "Verified Failure Incident", "cn_text": "Patna High Court proceedings and structural engineering audits documented multiple concrete span failures on the Sultanganj-Aguwani bridge project."}, "S4": {"title": "The Union Health Ministry issued an advisory after dozens of young children in Kerala contracted a contagious outbreak dubbed 'Tomato Flu' causing red blisters.", "body": "Hospitals in southern districts reported over 80 pediatric cases of high fever and painful tomato-shaped blisters, prompting a central advisory before testing confirmed it was a variant presentation of Hand, Foot, and Mouth Disease.", "sub": "r/india", "icon": "🍅", "fc_source": "Health Ministry / Factly", "fc_verdict": "Verified Outbreak Report", "cn_text": "Health authorities in Kerala reported over 80 pediatric cases of Hand, Foot and Mouth Disease (HFMD) with enlarged red blisters colloquially termed 'Tomato Flu'."}, "S5": {"title": "Disturbing drone video shows a high-speed Vande Bharat Express train mangled on top of another locomotive after a head-on collision from a Kavach failure.", "body": "A viral aerial clip showing a blue-and-white aerodynamic train smashed on top of a freight engine claims Indian Railways rushed Vande Bharat operations without proper anti-collision signaling safeguards.", "sub": "r/india", "icon": "🚆", "fc_source": "BOOM Live", "fc_verdict": "Rated False / CGI Animation", "cn_text": "Indian Railways confirmed the aerial collision footage is 3D animation created in a train simulator video game, not an actual Vande Bharat derailment."}, "S6": {"title": "Major railway disaster near Bikaner-Lalgarh station in Rajasthan: multiple passenger coaches derailed and climbed onto each other as NDRF rescue begins.", "body": "Video footage showing an Indian Railways blue passenger coach perched on top of another derailed bogie with uniformed NDRF personnel cutting through windows claims a catastrophic collision occurred in Lalgarh.", "sub": "r/india", "icon": "🚨", "fc_source": "Vishvas News / BOOM", "fc_verdict": "Rated Misleading / Mock Drill", "cn_text": "Railway authorities in Bikaner clarified the video shows a planned National Disaster Response Force (NDRF) rescue training exercise on old coaches."}, "S7": {"title": "Wholesale grain markets are being flooded with cheap 'plastic rice' from China made of synthetic resin pellets that bounces like a rubber ball when cooked.", "body": "Viral consumer videos showing cooked rice balls bouncing several inches high off kitchen floors warn that unscrupulous traders are mixing synthetic plastic grains into retail basmati rice bags to boost profits.", "sub": "r/india", "icon": "🍚", "fc_source": "Alt News & BOOM Live", "fc_verdict": "Rated False / Persistent Hoax", "cn_text": "FSSAI and independent food safety laboratories tested viral bouncing rice balls and confirmed they are normal cooked carbohydrates (starch/amylose), not plastic."}, "S8": {"title": "Police issued a high alert after arresting members of an interstate child-kidnapping syndicate with over 500 operatives disguised as sadhus and vendors.", "body": "An urgent residential advisory warns parents not to let children play unattended, claiming police arrested traffickers who confessed that 500 operatives with chloroform are active across major Indian neighborhoods.", "sub": "r/india", "icon": "🚔", "fc_source": "BOOM Live & Alt News", "fc_verdict": "Rated False / Panic Forward", "cn_text": "State police departments across India verified that the '500 disguised child kidnappers' advisory is a fabricated panic forward without investigative basis."}};
+const TASKS = [{"block": 1, "task_id": 1, "domain": "Health & Medicine", "post_a": {"claim_id": "H5", "ai_bucket": "Low", "fc": "Absent", "cn": "Present", "upvotes": "High"}, "post_b": {"claim_id": "H6", "ai_bucket": "High", "fc": "Present", "cn": "Absent", "upvotes": "Low"}}, {"block": 1, "task_id": 2, "domain": "Health & Medicine", "post_a": {"claim_id": "H7", "ai_bucket": "Low", "fc": "Absent", "cn": "Present", "upvotes": "High"}, "post_b": {"claim_id": "H8", "ai_bucket": "Med", "fc": "Present", "cn": "Absent", "upvotes": "Low"}}, {"block": 1, "task_id": 3, "domain": "Finance & Wealth", "post_a": {"claim_id": "F5", "ai_bucket": "Med", "fc": "Absent", "cn": "Absent", "upvotes": "High"}, "post_b": {"claim_id": "F6", "ai_bucket": "High", "fc": "Present", "cn": "Present", "upvotes": "Low"}}, {"block": 1, "task_id": 4, "domain": "Finance & Wealth", "post_a": {"claim_id": "F7", "ai_bucket": "Low", "fc": "Present", "cn": "Absent", "upvotes": "Low"}, "post_b": {"claim_id": "F8", "ai_bucket": "Med", "fc": "Absent", "cn": "Present", "upvotes": "High"}}, {"block": 1, "task_id": 5, "domain": "Technology & AI", "post_a": {"claim_id": "T5", "ai_bucket": "Med", "fc": "Present", "cn": "Present", "upvotes": "Low"}, "post_b": {"claim_id": "T6", "ai_bucket": "High", "fc": "Absent", "cn": "Absent", "upvotes": "Low"}}, {"block": 1, "task_id": 6, "domain": "Technology & AI", "post_a": {"claim_id": "T7", "ai_bucket": "Low", "fc": "Present", "cn": "Absent", "upvotes": "Low"}, "post_b": {"claim_id": "T8", "ai_bucket": "High", "fc": "Absent", "cn": "Present", "upvotes": "High"}}, {"block": 1, "task_id": 7, "domain": "Public Safety", "post_a": {"claim_id": "S5", "ai_bucket": "Med", "fc": "Absent", "cn": "Present", "upvotes": "High"}, "post_b": {"claim_id": "S6", "ai_bucket": "High", "fc": "Present", "cn": "Absent", "upvotes": "Low"}}, {"block": 1, "task_id": 8, "domain": "Public Safety", "post_a": {"claim_id": "S7", "ai_bucket": "Low", "fc": "Present", "cn": "Absent", "upvotes": "High"}, "post_b": {"claim_id": "S8", "ai_bucket": "High", "fc": "Absent", "cn": "Present", "upvotes": "Low"}}, {"block": 2, "task_id": 9, "domain": "Health & Medicine", "post_a": {"claim_id": "H5", "ai_bucket": "Low", "fc": "Present", "cn": "Present", "upvotes": "High"}, "post_b": {"claim_id": "H7", "ai_bucket": "High", "fc": "Absent", "cn": "Absent", "upvotes": "Low"}}, {"block": 2, "task_id": 10, "domain": "Health & Medicine", "post_a": {"claim_id": "H6", "ai_bucket": "Low", "fc": "Present", "cn": "Present", "upvotes": "Low"}, "post_b": {"claim_id": "H8", "ai_bucket": "Med", "fc": "Absent", "cn": "Absent", "upvotes": "High"}}, {"block": 2, "task_id": 11, "domain": "Finance & Wealth", "post_a": {"claim_id": "F5", "ai_bucket": "Med", "fc": "Present", "cn": "Absent", "upvotes": "High"}, "post_b": {"claim_id": "F7", "ai_bucket": "High", "fc": "Absent", "cn": "Present", "upvotes": "Low"}}, {"block": 2, "task_id": 12, "domain": "Finance & Wealth", "post_a": {"claim_id": "F6", "ai_bucket": "Low", "fc": "Absent", "cn": "Absent", "upvotes": "High"}, "post_b": {"claim_id": "F8", "ai_bucket": "High", "fc": "Absent", "cn": "Present", "upvotes": "Low"}}, {"block": 2, "task_id": 13, "domain": "Technology & AI", "post_a": {"claim_id": "T5", "ai_bucket": "Low", "fc": "Absent", "cn": "Present", "upvotes": "Low"}, "post_b": {"claim_id": "T7", "ai_bucket": "Med", "fc": "Present", "cn": "Absent", "upvotes": "High"}}, {"block": 2, "task_id": 14, "domain": "Technology & AI", "post_a": {"claim_id": "T6", "ai_bucket": "Med", "fc": "Present", "cn": "Absent", "upvotes": "Low"}, "post_b": {"claim_id": "T8", "ai_bucket": "High", "fc": "Absent", "cn": "Present", "upvotes": "High"}}, {"block": 2, "task_id": 15, "domain": "Public Safety", "post_a": {"claim_id": "S5", "ai_bucket": "Low", "fc": "Present", "cn": "Absent", "upvotes": "High"}, "post_b": {"claim_id": "S7", "ai_bucket": "Med", "fc": "Absent", "cn": "Present", "upvotes": "Low"}}, {"block": 2, "task_id": 16, "domain": "Public Safety", "post_a": {"claim_id": "S6", "ai_bucket": "Low", "fc": "Absent", "cn": "Present", "upvotes": "Low"}, "post_b": {"claim_id": "S8", "ai_bucket": "High", "fc": "Present", "cn": "Absent", "upvotes": "High"}}, {"block": 3, "task_id": 17, "domain": "Health & Medicine", "post_a": {"claim_id": "H5", "ai_bucket": "Med", "fc": "Present", "cn": "Present", "upvotes": "Low"}, "post_b": {"claim_id": "H8", "ai_bucket": "High", "fc": "Absent", "cn": "Absent", "upvotes": "High"}}, {"block": 3, "task_id": 18, "domain": "Health & Medicine", "post_a": {"claim_id": "H6", "ai_bucket": "Low", "fc": "Absent", "cn": "Absent", "upvotes": "High"}, "post_b": {"claim_id": "H7", "ai_bucket": "Med", "fc": "Present", "cn": "Present", "upvotes": "Low"}}, {"block": 3, "task_id": 19, "domain": "Finance & Wealth", "post_a": {"claim_id": "F5", "ai_bucket": "Med", "fc": "Absent", "cn": "Absent", "upvotes": "Low"}, "post_b": {"claim_id": "F8", "ai_bucket": "Low", "fc": "Present", "cn": "Present", "upvotes": "High"}}, {"block": 3, "task_id": 20, "domain": "Finance & Wealth", "post_a": {"claim_id": "F6", "ai_bucket": "Low", "fc": "Absent", "cn": "Absent", "upvotes": "High"}, "post_b": {"claim_id": "F7", "ai_bucket": "High", "fc": "Present", "cn": "Present", "upvotes": "Low"}}, {"block": 3, "task_id": 21, "domain": "Technology & AI", "post_a": {"claim_id": "T5", "ai_bucket": "Low", "fc": "Present", "cn": "Present", "upvotes": "Low"}, "post_b": {"claim_id": "T8", "ai_bucket": "High", "fc": "Absent", "cn": "Absent", "upvotes": "High"}}, {"block": 3, "task_id": 22, "domain": "Technology & AI", "post_a": {"claim_id": "T6", "ai_bucket": "Low", "fc": "Absent", "cn": "Present", "upvotes": "High"}, "post_b": {"claim_id": "T7", "ai_bucket": "Med", "fc": "Absent", "cn": "Absent", "upvotes": "Low"}}, {"block": 3, "task_id": 23, "domain": "Public Safety", "post_a": {"claim_id": "S5", "ai_bucket": "Med", "fc": "Absent", "cn": "Present", "upvotes": "Low"}, "post_b": {"claim_id": "S8", "ai_bucket": "High", "fc": "Present", "cn": "Absent", "upvotes": "High"}}, {"block": 3, "task_id": 24, "domain": "Public Safety", "post_a": {"claim_id": "S6", "ai_bucket": "Med", "fc": "Present", "cn": "Present", "upvotes": "High"}, "post_b": {"claim_id": "S7", "ai_bucket": "High", "fc": "Absent", "cn": "Absent", "upvotes": "Low"}}];
+
+// STATE
+let assignedBlock = 1;
+let currentTaskIndex = 0; // 0 to 7
+let blockTasks = [];
+let currentStep = 1;
+let surveySubmitted = false;
+
+// GRANULAR TIMING TELEMETRY (In Seconds)
+let surveyStartTime = Date.now();
+let step1StartTime = Date.now();
+let step2StartTime = 0;
+let step3StartTime = 0;
+let taskStartTime = 0;
+let step4StartTime = 0;
+
+let step1DurationSec = 0;
+let step2DurationSec = 0;
+let step3DurationSec = 0;
+let step4DurationSec = 0;
+let totalSurveyDurationSec = 0;
+
+let responses = {
+  session_id: 'iitm_' + Math.random().toString(36).substring(2, 10),
+  profile: {},
+  crt: {},
+  dce_choices: [],
+  pilot_feedback: {},
+  timings: {},
+  assigned_block: 1,
+  timestamp_start: new Date().toISOString()
+};
+
+let currentChoice = null;
+let currentConfidence = null;
+
+// BROWSER HISTORY: Enabled for testing (back navigation allowed)
+window.addEventListener('popstate', function (event) {
+  if (event.state && event.state.step) {
+    gotoStep(event.state.step);
+  } else if (currentStep > 1) {
+    gotoStep(currentStep - 1);
+  }
+});
+
+function showToast(msg) {
+  let toast = document.getElementById('survey-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'survey-toast';
+    toast.className = 'survey-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.classList.add('visible');
+  setTimeout(() => { toast.classList.remove('visible'); }, 3500);
+}
+
+// PROBABILISTIC BUCKET GENERATOR (Prof. Nargis's Rule)
+function getConfidenceScore(bucket) {
+  // Low: 51-58%, Med: 69-76%, High: 91-97%
+  if (bucket === 'Low') return Math.floor(Math.random() * (58 - 51 + 1)) + 51;
+  if (bucket === 'Med') return Math.floor(Math.random() * (76 - 69 + 1)) + 69;
+  return Math.floor(Math.random() * (97 - 91 + 1)) + 91;
+}
+
+function getEngagement(level) {
+  if (level === 'High') {
+    const rawUp = Math.floor(Math.random() * (11800 - 8400 + 1)) + 8400;
+    const upStr = (rawUp / 1000).toFixed(1) + 'k upvotes';
+    const commentsRaw = Math.floor(Math.random() * (880 - 420 + 1)) + 420;
+    const commStr = commentsRaw + ' comments';
+    return { upvotes: '▲ ' + upStr, comments: '💬 ' + commStr, level: 'High' };
+  } else {
+    const rawUp = Math.floor(Math.random() * (64 - 28 + 1)) + 28;
+    const upStr = rawUp + ' upvotes';
+    const commentsRaw = Math.floor(Math.random() * (16 - 4 + 1)) + 4;
+    const commStr = commentsRaw + ' comments';
+    return { upvotes: '▲ ' + upStr, comments: '💬 ' + commStr, level: 'Low' };
+  }
+}
+
+function toggleCuesModal() {
+  document.getElementById('cues-modal').classList.toggle('active');
+}
+
+// SHUFFLE FUNCTION (Fisher-Yates) for in-block presentation randomness
+function shuffleArray(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// BLOCK ALLOCATION (URL Param > Random Fallback)
+function initBlock() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const qBlock = urlParams.get('b') || urlParams.get('block');
+
+  if (qBlock && ['1', '2', '3'].includes(qBlock)) {
+    assignedBlock = parseInt(qBlock, 10);
+  } else {
+    // True balanced random rotation across 1, 2, 3
+    assignedBlock = Math.floor(Math.random() * 3) + 1;
+  }
+
+  responses.assigned_block = assignedBlock;
+  
+  // Filter 8 tasks for this block and randomize order within block
+  const rawBlockTasks = TASKS.filter(t => t.block === assignedBlock);
+  blockTasks = shuffleArray(rawBlockTasks);
+  currentTaskIndex = 0;
+  loadTask(0);
+}
+
+// Trap phone / browser back button to prevent accidental navigation away
+history.replaceState({ step: 1 }, document.title, window.location.href);
+window.addEventListener('popstate', function (event) {
+  history.pushState(null, document.title, window.location.href);
+});
+
+const STAGE_TITLES = {
+  1: { badge: "Section 1 of 4", title: "Profile & Browsing Habits", pct: 25 },
+  2: { badge: "Section 2 of 4", title: "Cognitive Reflection Checks", pct: 50 },
+  3: { badge: "Section 3 of 4", title: "Social Media Evaluation", pct: 75 },
+  4: { badge: "Section 4 of 4", title: "Study Feedback & Review", pct: 95 },
+  5: { badge: "Complete 🎉", title: "Thank You & Acknowledgment", pct: 100 }
+};
+
+function updateStageIndicator(s) {
+  const info = STAGE_TITLES[s] || { badge: `Section ${s}`, title: "", pct: 25 * s };
+  const bEl = document.getElementById('stage-badge');
+  const tEl = document.getElementById('stage-title');
+  const fEl = document.getElementById('stage-fill');
+  if (bEl) bEl.textContent = info.badge;
+  if (tEl) {
+    if (s === 3) {
+      tEl.textContent = `Social Media Evaluation (Task ${currentTaskIndex + 1} of 8)`;
+    } else {
+      tEl.textContent = info.title;
+    }
+  }
+  if (fEl) {
+    if (s === 3) {
+      fEl.style.width = (50 + ((currentTaskIndex + 1) / 8) * 35) + '%';
+    } else {
+      fEl.style.width = info.pct + '%';
+    }
+  }
+  
+  const sw = document.querySelector('.stepper-wrap');
+  if (sw) {
+    if (s === 5) sw.style.display = 'none';
+    else sw.style.display = 'block';
+  }
+}
+
+// STEP NAVIGATION
+function gotoStep(s) {
+  currentStep = s;
+  document.querySelectorAll('.view-pane').forEach(p => p.classList.remove('active'));
+  
+  const targetPane = document.getElementById('pane-' + s);
+  if (targetPane) targetPane.classList.add('active');
+
+  updateStageIndicator(s);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// VALIDATION HELPERS (NON-BLOCKING FOR TESTING)
+function updateAge(el) {
+  const val = parseInt(el.value, 10);
+  if (val && val >= 15 && val <= 99) {
+    responses.profile.age = val;
+  } else {
+    delete responses.profile.age;
+  }
+}
+
+function validateStep1() {
+  const p = responses.profile;
+  const ageVal = parseInt(document.getElementById('inp-age').value, 10);
+  if (!ageVal || isNaN(ageVal) || ageVal < 15 || ageVal > 99) {
+    alert("Please enter a valid age in years (e.g. 23).");
+    document.getElementById('inp-age').focus();
+    return;
+  }
+  p.age = ageVal;
+
+  if (!p.gender) {
+    alert("Please select your gender identity.");
+    return;
+  }
+  if (!p.edu) {
+    alert("Please select your education level.");
+    return;
+  }
+  if (!p.pref_domain || !Array.isArray(p.pref_domain) || p.pref_domain.length === 0) {
+    alert("Please select 1 or 2 topic domains you follow most often.");
+    return;
+  }
+  if (!p.reddit_freq) {
+    alert("Please select your Reddit usage frequency.");
+    return;
+  }
+  if (!p.ai_trust) {
+    alert("Please rate your general trust in AI systems (1 to 7).");
+    return;
+  }
+
+  step1DurationSec = Math.max(1, Math.round((Date.now() - step1StartTime) / 1000));
+  step2StartTime = Date.now();
+
+  gotoStep(2);
+}
+
+function validateStep2() {
+  const c = responses.crt;
+  if (!c.crt_race || !c.crt_sheep || !c.crt_name) {
+    alert("Please answer all 3 thinking check questions before proceeding.");
+    return;
+  }
+
+  step2DurationSec = Math.max(1, Math.round((Date.now() - step2StartTime) / 1000));
+  step3StartTime = Date.now();
+  taskStartTime = Date.now();
+
+  gotoStep(3);
+}
+
+// CHIP & LIKERT HANDLERS
+function selChip(el) {
+  const p = el.parentElement;
+  p.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const qid = p.dataset.qid;
+  if (qid.startsWith('crt_')) responses.crt[qid] = el.textContent.trim();
+  else responses.profile[qid] = el.textContent.trim();
+}
+
+function selMultiChip(el, maxSel) {
+  maxSel = maxSel || 2;
+  const p = el.parentElement;
+  const isSelected = el.classList.contains('selected');
+  const currentSelected = p.querySelectorAll('.chip.selected');
+
+  if (isSelected) {
+    el.classList.remove('selected');
+  } else {
+    if (currentSelected.length >= maxSel) {
+      alert(`You can select at most ${maxSel} topics. Please tap a selected topic to unselect it first.`);
+      return;
+    }
+    el.classList.add('selected');
+  }
+
+  const selectedVals = Array.from(p.querySelectorAll('.chip.selected')).map(c => c.textContent.trim());
+  const qid = p.dataset.qid;
+  responses.profile[qid] = selectedVals;
+}
+
+function selLikert(btn) {
+  const p = btn.parentElement;
+  p.querySelectorAll('.lbtn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const qid = p.dataset.qid;
+  if (qid.startsWith('fb_')) responses.pilot_feedback[qid] = parseInt(btn.textContent, 10);
+  else responses.profile[qid] = parseInt(btn.textContent, 10);
+}
+
+function toggleChk(item) {
+  const chk = item.querySelector('input');
+  chk.checked = !chk.checked;
+  item.classList.toggle('checked', chk.checked);
+}
+
+// TASK RENDERER
+function loadTask(idx) {
+  currentChoice = null;
+  currentConfidence = null;
+  taskStartTime = Date.now(); // Start timer for this specific task
+
+  document.getElementById('card-a').classList.remove('chosen');
+  document.getElementById('card-b').classList.remove('chosen');
+  document.getElementById('btn-choose-a').classList.remove('active');
+  document.getElementById('btn-choose-b').classList.remove('active');
+  document.querySelectorAll('#task-conf-likert .lbtn').forEach(b => b.classList.remove('selected'));
+
+  const t = blockTasks[idx];
+  document.getElementById('task-title').textContent = `Task ${idx + 1} of 8`;
+  const progEl = document.getElementById('task-prog'); if (progEl) progEl.textContent = `${idx + 1}/8`; updateStageIndicator(3);
+
+  // Render Post A
+  const ca = CLAIMS[t.post_a.claim_id];
+  document.getElementById('sub-a').textContent = ca.sub;
+  document.getElementById('title-a').textContent = ca.title;
+  document.getElementById('body-a').textContent = ca.body;
+  document.getElementById('author-a').textContent = `u/user_${Math.floor(Math.random() * 899 + 100)} • ${Math.floor(Math.random() * 6 + 1)}h ago`;
+  
+  const aiScoreA = getConfidenceScore(t.post_a.ai_bucket);
+  const engA = getEngagement(t.post_a.upvotes);
+  document.getElementById('upvotes-a').textContent = engA.upvotes;
+  document.getElementById('comments-a').textContent = engA.comments;
+
+  // Set Reddit Post Flair (Directly on Title)
+  document.getElementById('flair-a').innerHTML = `🤖 AI Flag: Flagged Misleading &bull; <strong>${aiScoreA}% Confidence</strong>`;
+
+  let fcHtmlA = (t.post_a.fc === 'Present')
+    ? `<div class="cue-badge cue-fc-yes">🛡️ <strong>Independent Fact-Check (${ca.fc_source}):</strong> ${ca.fc_verdict}</div>`
+    : `<div class="cue-badge cue-absent">🛡️ <strong>Independent Fact-Check:</strong> None on record</div>`;
+
+  let cnHtmlA = (t.post_a.cn === 'Present')
+    ? `<div class="cn-box">
+         <div class="cn-header">👥 <strong>Community Note</strong> &bull; Rated helpful by Reddit readers</div>
+         <div class="cn-body">&ldquo;${ca.cn_text}&rdquo;</div>
+       </div>`
+    : `<div class="cue-badge cue-absent">👥 <strong>Community Note:</strong> No notes submitted</div>`;
+
+  document.getElementById('cues-a').innerHTML = `${fcHtmlA}${cnHtmlA}`;
+
+  // Render Post B
+  const cb = CLAIMS[t.post_b.claim_id];
+  document.getElementById('sub-b').textContent = cb.sub;
+  document.getElementById('title-b').textContent = cb.title;
+  document.getElementById('body-b').textContent = cb.body;
+  document.getElementById('author-b').textContent = `u/user_${Math.floor(Math.random() * 899 + 100)} • ${Math.floor(Math.random() * 6 + 1)}h ago`;
+  
+  const aiScoreB = getConfidenceScore(t.post_b.ai_bucket);
+  const engB = getEngagement(t.post_b.upvotes);
+  document.getElementById('upvotes-b').textContent = engB.upvotes;
+  document.getElementById('comments-b').textContent = engB.comments;
+
+  // Set Reddit Post Flair (Directly on Title)
+  document.getElementById('flair-b').innerHTML = `🤖 AI Flag: Flagged Misleading &bull; <strong>${aiScoreB}% Confidence</strong>`;
+
+  let fcHtmlB = (t.post_b.fc === 'Present')
+    ? `<div class="cue-badge cue-fc-yes">🛡️ <strong>Independent Fact-Check (${cb.fc_source}):</strong> ${cb.fc_verdict}</div>`
+    : `<div class="cue-badge cue-absent">🛡️ <strong>Independent Fact-Check:</strong> None on record</div>`;
+
+  let cnHtmlB = (t.post_b.cn === 'Present')
+    ? `<div class="cn-box">
+         <div class="cn-header">👥 <strong>Community Note</strong> &bull; Rated helpful by Reddit readers</div>
+         <div class="cn-body">&ldquo;${cb.cn_text}&rdquo;</div>
+       </div>`
+    : `<div class="cue-badge cue-absent">👥 <strong>Community Note:</strong> No notes submitted</div>`;
+
+  document.getElementById('cues-b').innerHTML = `${fcHtmlB}${cnHtmlB}`;
+
+  // Store exact rendered values on task object for complete audit logging
+  t.rendered = {
+    post_a: {
+      claim_id: t.post_a.claim_id,
+      ai_bucket: t.post_a.ai_bucket,
+      ai_score_shown: aiScoreA + '%',
+      fc_status: t.post_a.fc,
+      fc_text: (t.post_a.fc === 'Present') ? `${ca.fc_source}: ${ca.fc_verdict}` : 'None',
+      cn_status: t.post_a.cn,
+      cn_text: (t.post_a.cn === 'Present') ? ca.cn_text : 'None',
+      upvotes_level: t.post_a.upvotes,
+      upvotes_shown: engA.upvotes,
+      comments_shown: engA.comments
+    },
+    post_b: {
+      claim_id: t.post_b.claim_id,
+      ai_bucket: t.post_b.ai_bucket,
+      ai_score_shown: aiScoreB + '%',
+      fc_status: t.post_b.fc,
+      fc_text: (t.post_b.fc === 'Present') ? `${cb.fc_source}: ${cb.fc_verdict}` : 'None',
+      cn_status: t.post_b.cn,
+      cn_text: (t.post_b.cn === 'Present') ? cb.cn_text : 'None',
+      upvotes_level: t.post_b.upvotes,
+      upvotes_shown: engB.upvotes,
+      comments_shown: engB.comments
+    }
+  };
+
+  const btnNext = document.getElementById('btn-next-task');
+  btnNext.textContent = (idx === 7) ? "Proceed to Feedback (Final Section) →" : `Next Task (${idx + 2} of 8) →`;
+}
+
+function choosePost(choice) {
+  currentChoice = choice;
+  const ca = document.getElementById('card-a');
+  const cb = document.getElementById('card-b');
+  const ba = document.getElementById('btn-choose-a');
+  const bb = document.getElementById('btn-choose-b');
+
+  if (choice === 'A') {
+    ca.classList.add('chosen'); cb.classList.remove('chosen');
+    ba.classList.add('active'); bb.classList.remove('active');
+  } else {
+    cb.classList.add('chosen'); ca.classList.remove('chosen');
+    bb.classList.add('active'); ba.classList.remove('active');
+  }
+}
+
+function selTaskConf(btn, val) {
+  document.querySelectorAll('#task-conf-likert .lbtn').forEach(b => b.classList.remove('selected'));
+  if (btn) btn.classList.add('selected');
+  currentConfidence = val;
+}
+
+function nextTask() {
+  if (!currentChoice) {
+    alert("Please select either Post A or Post B before proceeding.");
+    return;
+  }
+  if (!currentConfidence) {
+    alert("Please rate how confident you are in trusting the selected post (1 to 7).");
+    return;
+  }
+
+  // Calculate response latency for this choice card in seconds
+  const taskDurationSec = Math.max(1, Math.round((Date.now() - taskStartTime) / 1000));
+  const currentTask = blockTasks[currentTaskIndex];
+
+  responses.dce_choices.push({
+    task_order_in_presentation: currentTaskIndex + 1,
+    task_global_id: currentTask.task_id,
+    block: assignedBlock,
+    domain: currentTask.domain,
+    chosen_post: currentChoice,
+    trust_in_chosen_post: currentConfidence,
+    task_response_time_sec: taskDurationSec,
+
+    post_a_claim_id: currentTask.rendered.post_a.claim_id,
+    post_a_ai_bucket: currentTask.rendered.post_a.ai_bucket,
+    post_a_ai_score_shown: currentTask.rendered.post_a.ai_score_shown,
+    post_a_fc_status: currentTask.rendered.post_a.fc_status,
+    post_a_fc_text: currentTask.rendered.post_a.fc_text,
+    post_a_cn_status: currentTask.rendered.post_a.cn_status,
+    post_a_upvotes_level: currentTask.rendered.post_a.upvotes_level,
+    post_a_upvotes_shown: currentTask.rendered.post_a.upvotes_shown,
+    post_a_comments_shown: currentTask.rendered.post_a.comments_shown,
+
+    post_b_claim_id: currentTask.rendered.post_b.claim_id,
+    post_b_ai_bucket: currentTask.rendered.post_b.ai_bucket,
+    post_b_ai_score_shown: currentTask.rendered.post_b.ai_score_shown,
+    post_b_fc_status: currentTask.rendered.post_b.fc_status,
+    post_b_fc_text: currentTask.rendered.post_b.fc_text,
+    post_b_cn_status: currentTask.rendered.post_b.cn_status,
+    post_b_upvotes_level: currentTask.rendered.post_b.upvotes_level,
+    post_b_upvotes_shown: currentTask.rendered.post_b.upvotes_shown,
+    post_b_comments_shown: currentTask.rendered.post_b.comments_shown,
+    timestamp: new Date().toISOString()
+  });
+
+  if (currentTaskIndex < 7) {
+    currentTaskIndex++;
+    loadTask(currentTaskIndex);
+    window.scrollTo({ top: 120, behavior: 'smooth' });
+  } else {
+    // Record Step 3 Duration
+    step3DurationSec = Math.max(1, Math.round((Date.now() - step3StartTime) / 1000));
+    step4StartTime = Date.now();
+    gotoStep(4);
+  }
+}
+
+function prevTask() {
+  if (currentTaskIndex > 0) {
+    currentTaskIndex--;
+    loadTask(currentTaskIndex);
+    window.scrollTo({ top: 120, behavior: 'smooth' });
+  } else {
+    gotoStep(2);
+  }
+}
+
+// SUBMISSION & GOOGLE SHEETS INTEGRATION
+async function submitPilotSurvey() {
+  const anaChecked = [];
+  document.querySelectorAll('#ana-group .chk-item input:checked').forEach(c => anaChecked.push(c.value));
+  responses.pilot_feedback.attribute_attendance = anaChecked;
+  responses.pilot_feedback.comments = document.getElementById('fb_comments').value.trim();
+  
+  // Disable button to prevent accidental double submission
+  const submitBtn = document.getElementById('btn-submit-pilot');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting Responses... Please wait';
+  }
+
+  // Finalize Telemetry Timings
+  step4DurationSec = Math.max(1, Math.round((Date.now() - step4StartTime) / 1000));
+  totalSurveyDurationSec = step1DurationSec + step2DurationSec + step3DurationSec + step4DurationSec;
+
+  responses.timings = {
+    time_step1_profile_sec: step1DurationSec,
+    time_step2_crt_sec: step2DurationSec,
+    time_step3_tasks_total_sec: step3DurationSec,
+    time_step4_feedback_sec: step4DurationSec,
+    time_total_survey_sec: totalSurveyDurationSec
+  };
+
+  responses.timestamp_end = new Date().toISOString();
+  responses.assigned_block = assignedBlock;
+  surveySubmitted = true; // Mark as safely completed so beforeunload warning is suppressed
+
+  // Persist locally as backup
+  try {
+    localStorage.setItem('iitm_pilot_last_payload', JSON.stringify(responses));
+  } catch (e) {}
+
+  // 1. Immediately transition to Step 5 (Zero latency!)
+  gotoStep(5);
+
+  // 2. Dispatch directly to Google Sheets Webhook in background
+  if (typeof GOOGLE_APPS_SCRIPT_URL !== 'undefined' && GOOGLE_APPS_SCRIPT_URL) {
+    sendPayloadToWebhook(GOOGLE_APPS_SCRIPT_URL, responses)
+      .then(() => {
+        const sEl = document.getElementById('sync-status');
+        if (sEl) {
+          sEl.innerHTML = '<span>✅</span> Response safely recorded in IIT Madras database!';
+          sEl.classList.add('synced');
+        }
+      })
+      .catch(err => {
+        console.warn("Webhook background sync notice:", err);
+      });
+  }
+}
+
+async function sendPayloadToWebhook(url, payload) {
+  // CORS-safelisted text/plain POST ensures zero preflight failures on Google Apps Script
+  return fetch(url, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+}
+
+
+
+// Restore saved response from localStorage if present
+try {
+  const cached = localStorage.getItem('iitm_pilot_last_payload');
+  if (cached) {
+    const parsed = JSON.parse(cached);
+    if (parsed && parsed.session_id) {
+      responses = parsed;
+      assignedBlock = parsed.assigned_block || 1;
+    }
+  }
+} catch (e) {}
+
+function shareSurveyLink() {
+  const url = window.location.href.split('?')[0];
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => {
+      const msg = document.getElementById('share-link-msg');
+      if (msg) {
+        msg.style.display = 'block';
+        setTimeout(() => { msg.style.display = 'none'; }, 4000);
+      }
+    });
+  } else {
+    alert("Share this survey URL: " + url);
+  }
+}
+
+// INITIALIZE ON LOAD
+initBlock();
+</script>
+
+</body>
+</html>
