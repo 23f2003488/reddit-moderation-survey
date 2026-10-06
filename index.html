@@ -212,25 +212,7 @@ body {
 }
 
 .btn-prev {
-  background: #ffffff;
-  color: #334155;
-  border: 1.5px solid #cbd5e1;
-  border-radius: var(--radius-pill);
-  padding: 10px 22px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.18s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-}
-.btn-prev:hover {
-  background: #f8fafc;
-  border-color: #94a3b8;
-  color: #0f172a;
-  transform: translateY(-1px);
+  display: none !important;
 }
 
 .container {
@@ -1346,8 +1328,7 @@ textarea.f-input:focus { background: #fff; border-color: #6366f1; box-shadow: 0 
         </div>
       </div>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;">
-        <button type="button" class="btn-prev" onclick="gotoStep(1)">&larr; Back to Profile</button>
+      <div style="display:flex;justify-content:flex-end;align-items:center;margin-top:20px;gap:12px;">
         <button type="button" class="btn-next" onclick="validateStep2()">Continue to Study Overview &amp; Guide &rarr;</button>
       </div>
     </div>
@@ -1485,8 +1466,7 @@ textarea.f-input:focus { background: #fff; border-color: #6366f1; box-shadow: 0 
         </div>
       </div>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:12px;flex-wrap:wrap;">
-        <button type="button" class="btn-prev" onclick="gotoStep(2)">&larr; Back to Reflection Checks</button>
+      <div style="display:flex;justify-content:flex-end;align-items:center;margin-top:24px;gap:12px;flex-wrap:wrap;">
         <button type="button" class="btn-next" style="padding:13px 26px;font-size:14.5px;background:var(--primary-gradient);box-shadow:0 4px 16px rgba(79,70,229,0.35);" onclick="startDceTasks()">
           Start Evaluation Tasks (Task 1 of 8) &rarr;
         </button>
@@ -1657,8 +1637,7 @@ textarea.f-input:focus { background: #fff; border-color: #6366f1; box-shadow: 0 
         </div>
       </div>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;">
-        <button type="button" class="btn-prev" onclick="prevTask()">&larr; Previous Task</button>
+      <div style="display:flex;justify-content:flex-end;align-items:center;margin-top:20px;gap:12px;">
         <button type="button" class="btn-next" id="btn-next-task" onclick="nextTask()">Next Task &rarr;</button>
       </div>
     </div>
@@ -1749,8 +1728,7 @@ textarea.f-input:focus { background: #fff; border-color: #6366f1; box-shadow: 0 
         <textarea class="f-input" id="fb_comments" placeholder="Optional comments for the IIT Madras research team..."></textarea>
       </div>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;">
-        <button type="button" class="btn-prev" onclick="gotoStep(3)">&larr; Back to Evaluation</button>
+      <div style="display:flex;justify-content:flex-end;align-items:center;margin-top:20px;gap:12px;">
         <button type="button" class="btn-next" id="btn-submit-pilot" onclick="submitPilotSurvey()">Submit Survey Responses &rarr;</button>
       </div>
     </div>
@@ -2561,14 +2539,9 @@ function nextTask() {
   }
 }
 
+// FORWARD-ONLY DESIGN: Backwards navigation is strictly disabled to maintain experimental integrity
 function prevTask() {
-  if (currentTaskIndex > 0) {
-    currentTaskIndex--;
-    loadTask(currentTaskIndex);
-    window.scrollTo({ top: 120, behavior: 'smooth' });
-  } else {
-    gotoStep('instructions');
-  }
+  console.warn("Backwards navigation is disabled in this experiment.");
 }
 
 // SUBMISSION & GOOGLE SHEETS INTEGRATION
