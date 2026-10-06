@@ -233,7 +233,21 @@ body {
   transform: translateY(-1px);
 }
 
-.container { max-width: 880px; margin: 22px auto; padding: 0 16px; }
+.container {
+  max-width: 900px;
+  margin: 22px auto;
+  padding: 0 16px;
+  transition: max-width 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* WIDESCREEN DESKTOP EXPANSION FOR STEP 3 (PROF. NARGIS'S SIZING FIX) */
+body.step-3-active .container {
+  max-width: 1220px;
+}
+@media (min-width: 1024px) {
+  body.step-3-active .reddit-card {
+    padding: 22px 24px;
+  }
+}
 
 /* VIEW PANES */
 .view-pane { display: none; }
@@ -363,15 +377,6 @@ body {
 }
 .guide-toggle-btn:hover { background: #e0e7ff; color: #3730a3; transform: translateY(-1px); }
 
-.cues-tip-banner {
-  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
-  border: 1.5px solid #93c5fd; border-radius: 12px;
-  padding: 12px 16px; font-size: 12.5px; color: #1e40af;
-  display: flex; justify-content: space-between; align-items: center; gap: 10px;
-  margin-bottom: 18px;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.06);
-}
-.tip-close { background: none; border: none; font-size: 18px; color: #3b82f6; cursor: pointer; line-height: 1; }
 
 .modal-overlay {
   display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.6);
@@ -487,116 +492,248 @@ body {
 .rc-sub-icon { width: 19px; height: 19px; border-radius: 50%; background: #ff4500; color: #fff; font-size: 10.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; }
 .rc-author { font-size: 11px; color: #64748b; font-weight: 500; }
 
-/* AUTHENTIC REDDIT POST FLAIR (ANCHORED DIRECTLY TO TITLE) */
+/* POLARITY-AWARE REDDIT POST FLAIR (PROMINENT FULL-WIDTH HEADER BADGE) */
 .reddit-post-flair {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 4px;
-  margin-bottom: 7px;
-  background: #fee2e2;
-  color: #991b1b;
-  border: 1px solid #fecdd3;
-  border-left: 3.5px solid #e11d48;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 9px;
   letter-spacing: 0.2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+.reddit-post-flair.flair-low-risk {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1.5px solid #10b981;
+  border-left: 5px solid #10b981;
+}
+.reddit-post-flair.flair-med-risk {
+  background: #fffbeb;
+  color: #92400e;
+  border: 1.5px solid #f59e0b;
+  border-left: 5px solid #f59e0b;
+}
+.reddit-post-flair.flair-high-risk {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1.5px solid #ef4444;
+  border-left: 5px solid #ef4444;
 }
 
-.rc-title { font-size: 14.5px; font-weight: 800; color: #0f172a; line-height: 1.4; margin-bottom: 6px; }
-.rc-body { font-size: 12.5px; color: #334155; line-height: 1.5; margin-bottom: 12px; }
+/* SUBDUED NEWS HEADLINE & BODY (PREVENTS NEWS BIAS OVERPOWERING CUES) */
+.rc-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.45;
+  margin-bottom: 6px;
+}
+.rc-body {
+  font-size: 12.8px;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
 
-/* AUTHENTIC REDDIT STICKIED AUTOMODERATOR CONTEXT BOX */
+/* AUTHENTIC REDDIT STICKIED MODERATOR CONTEXT BOX (HIGH PROMINENCE & CONTRAST) */
 .reddit-mod-sticky {
-  background: #f8fafc;
-  border: 1.5px solid #cbd5e1;
-  border-left: 4px solid #10b981;
-  border-radius: 8px;
-  padding: 10px 12px;
-  margin: 10px 0 12px 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-left: 5px solid #4f46e5;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 12px 0 14px 0;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
 }
 .rms-header {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  margin-bottom: 8px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #e2e8f0;
+  gap: 8px;
+  font-size: 12px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid #f1f5f9;
 }
-.rms-mod-shield { font-size: 13px; line-height: 1; }
-.rms-author { font-weight: 800; color: #0f172a; }
+.rms-mod-shield { font-size: 15px; line-height: 1; }
+.rms-author { font-weight: 800; color: #1e1b4b; }
 .rms-badge {
-  background: #10b981;
+  background: #4f46e5;
   color: #ffffff;
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 800;
-  padding: 1px 5px;
-  border-radius: 3px;
-  letter-spacing: 0.4px;
+  padding: 2.5px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
 }
 .rms-pinned {
-  color: #64748b;
-  font-weight: 600;
-  font-size: 10.5px;
+  color: #4338ca;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
 
-.cue-stack { display: flex; flex-direction: column; gap: 7px; }
+.cue-stack { display: flex; flex-direction: column; gap: 9px; }
 .cue-badge {
-  padding: 8px 11px;
-  border-radius: 6px;
-  font-size: 11.5px;
-  font-weight: 600;
+  padding: 11px 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 7px;
-  line-height: 1.4;
+  gap: 9px;
+  line-height: 1.45;
 }
 .cue-fc-yes {
-  background: #ecfdf5;
+  background: #f0fdf4;
   color: #065f46;
-  border: 1px solid #a7f3d0;
-  border-left: 3.5px solid #10b981;
+  border: 1.5px solid #86efac;
+  border-left: 5px solid #10b981;
+  box-shadow: 0 1px 4px rgba(16, 185, 129, 0.1);
 }
 .cue-cn-yes {
   background: #eff6ff;
   color: #1e40af;
-  border: 1px solid #bfdbfe;
-  border-left: 3.5px solid #3b82f6;
+  border: 1.5px solid #bfdbfe;
+  border-left: 5px solid #3b82f6;
 }
 .cue-absent {
-  background: #f1f5f9;
+  background: #f8fafc;
   color: #64748b;
   border: 1px solid #e2e8f0;
-  border-left: 3.5px solid #94a3b8;
+  border-left: 4px solid #cbd5e1;
   font-weight: 500;
+  font-size: 12px;
 }
 
 .cn-box {
   background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  border-left: 3.5px solid #2563eb;
-  border-radius: 6px;
-  padding: 8px 10px;
-  font-size: 11.5px;
-  line-height: 1.4;
+  border: 1.5px solid #bfdbfe;
+  border-left: 5px solid #3b82f6;
+  border-radius: 9px;
+  padding: 11px 13px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  box-shadow: 0 1px 4px rgba(59, 130, 246, 0.08);
 }
 .cn-header {
   font-weight: 800;
-  color: #1e40af;
-  margin-bottom: 2px;
-  font-size: 10.5px;
+  color: #1d4ed8;
+  margin-bottom: 4px;
+  font-size: 11px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 .cn-body {
   color: #1e3a8a;
-  font-style: italic;
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 600;
 }
+
+/* MANDATORY INSTRUCTIONS & CUES GUIDE PAGE STYLING */
+.instructions-hero {
+  background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+  border: 1.5px solid #c7d2fe;
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 22px;
+}
+.instructions-hero h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e1b4b;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.instructions-hero p {
+  font-size: 14px;
+  color: #334155;
+  line-height: 1.6;
+  margin: 0;
+}
+.cue-guide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 18px 0 24px 0;
+}
+@media (max-width: 768px) {
+  .cue-guide-grid { grid-template-columns: 1fr; }
+}
+.cue-preview-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.cpc-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #1e1b4b;
+  margin-bottom: 10px;
+}
+.cpc-desc {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+.cpc-example-box {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.inst-rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0 22px 0;
+}
+.inst-rule-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.iri-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #4f46e5;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.iri-text strong { color: #1e1b4b; font-size: 14px; display: block; margin-bottom: 3px; }
+.iri-text span { font-size: 13px; color: #475569; line-height: 1.5; }
 
 .rc-footer { display: flex; gap: 14px; font-size: 11.5px; color: #475569; font-weight: 700; padding-top: 10px; border-top: 1.5px solid rgba(203, 213, 225, 0.7); }
 
@@ -608,6 +745,51 @@ body {
 }
 @media (max-width: 520px) {
   .choice-action-bar { grid-template-columns: 1fr; }
+}
+
+/* DUAL-RESPONSE INTERACTION PANEL */
+.dual-response-panel {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  margin-top: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.dr-section {
+  margin-bottom: 6px;
+}
+.btn-share-opt {
+  background: #ffffff;
+  color: #334155;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-pill);
+  padding: 10px 22px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none;
+}
+.btn-share-opt:hover {
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+.btn-share-opt.selected {
+  background: #f0fdf4;
+  border-color: #10b981;
+  color: #065f46;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+}
+.btn-share-opt#btn-share-no.selected {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #991b1b;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
 }
 
 /* UNBIASED, IDENTICAL CHOICE BUTTONS */
@@ -1166,7 +1348,148 @@ textarea.f-input:focus { background: #fff; border-color: #6366f1; box-shadow: 0 
 
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;">
         <button type="button" class="btn-prev" onclick="gotoStep(1)">&larr; Back to Profile</button>
-        <button type="button" class="btn-next" onclick="validateStep2()">Start Social Media Evaluation Tasks &rarr;</button>
+        <button type="button" class="btn-next" onclick="validateStep2()">Continue to Study Overview &amp; Guide &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MANDATORY STUDY INSTRUCTIONS & CUE GUIDE ==================== -->
+  <div class="view-pane" id="pane-instructions">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <h2>Study Overview &amp; Post Elements Guide</h2>
+          <p>Please review this brief overview of how posts and platform information are presented in the upcoming tasks.</p>
+        </div>
+      </div>
+
+      <!-- General Task Instructions -->
+      <div class="instructions-hero">
+        <h3><span>📋</span> Study Overview</h3>
+        <p>
+          In the next section, you will view <strong>8 pairs of social media posts</strong> (Post A and Post B) modeled after real discussions on platforms like <strong>Reddit</strong> across Health, Finance, Technology, and Public Safety.
+        </p>
+        <p style="margin-top:8px;">
+          As on actual social media platforms, each post contains a headline, brief text, and standard platform features&mdash;such as automated moderation labels, external fact-check reviews, community context notes, and reader engagement counts.
+        </p>
+        <div style="margin-top:10px;background:rgba(79,70,229,0.06);border-left:3.5px solid #4f46e5;padding:10px 14px;border-radius:8px;font-size:13.5px;color:#1e1b4b;line-height:1.5;">
+          ⚖️ <strong>No Right or Wrong Answers:</strong> In online environments, readers encounter varied and sometimes conflicting details. Different people naturally prioritize different aspects of a post. We are interested in your genuine personal judgment as you would browse normally.
+        </div>
+      </div>
+
+      <!-- Visual Platform Signals Guide -->
+      <div style="margin-top:16px;">
+        <h3 style="font-size:16.5px;font-weight:800;color:#1e1b4b;margin-bottom:6px;">📌 Overview of Post Elements</h3>
+        <p style="font-size:13.5px;color:#475569;margin-bottom:14px;">To help you navigate the posts, here is a reference for the features that may appear on each card:</p>
+
+        <div class="cue-guide-grid">
+          <!-- Cue 1: AI Post Flair -->
+          <div class="cue-preview-card">
+            <div class="cpc-header">
+              <span style="font-size:20px;">🤖</span>
+              <span>1. Automated AI Moderation Flair</span>
+            </div>
+            <div class="cpc-example-box">
+              <span class="reddit-post-flair flair-low-risk">🤖 AI Automated Check: Low Risk &bull; <strong>Likely Accurate (55% Conf.)</strong></span>
+              <span class="reddit-post-flair flair-med-risk">🤖 AI Automated Check: Moderate Risk &bull; <strong>Review Caution (72% Conf.)</strong></span>
+              <span class="reddit-post-flair flair-high-risk">🤖 AI Automated Check: High Risk &bull; <strong>Flagged Misleading (94% Conf.)</strong></span>
+            </div>
+            <div class="cpc-desc">
+              An automated algorithmic check displayed as a flair badge on the post title, showing an automated assessment and confidence level.
+            </div>
+          </div>
+
+          <!-- Cue 2: Fact-Checker Badge -->
+          <div class="cue-preview-card">
+            <div class="cpc-header">
+              <span style="font-size:20px;">🛡️</span>
+              <span>2. Independent Fact-Check Badge</span>
+            </div>
+            <div class="cpc-example-box">
+              <div class="cue-badge cue-fc-yes" style="font-size:12px;padding:8px 10px;">🛡️ <strong>Independent Fact-Check (Snopes / BOOM):</strong> Verified Accurate</div>
+              <div class="cue-badge cue-absent" style="font-size:12px;padding:8px 10px;">🛡️ <strong>Independent Fact-Check:</strong> None on record</div>
+            </div>
+            <div class="cpc-desc">
+              A review badge indicating whether an external third-party fact-checking organization has verified or reviewed the claim.
+            </div>
+          </div>
+
+          <!-- Cue 3: Community Note -->
+          <div class="cue-preview-card">
+            <div class="cpc-header">
+              <span style="font-size:20px;">👥</span>
+              <span>3. Community Context Note</span>
+            </div>
+            <div class="cpc-example-box">
+              <div class="cn-box" style="padding:8px 10px;">
+                <div class="cn-header">👥 Community Note &bull; Rated helpful by readers</div>
+                <div class="cn-body" style="font-size:11.5px;">&ldquo;Clinical safety trials confirmed the policy is active and verified by official health registries.&rdquo;</div>
+              </div>
+              <div class="cue-badge cue-absent" style="font-size:12px;padding:8px 10px;">👥 <strong>Community Note:</strong> No notes submitted</div>
+            </div>
+            <div class="cpc-desc">
+              A crowdsourced context note submitted and rated by community members to provide additional background or nuances.
+            </div>
+          </div>
+
+          <!-- Cue 4: Social Engagement -->
+          <div class="cue-preview-card">
+            <div class="cpc-header">
+              <span style="font-size:20px;">▲</span>
+              <span>4. Reader Engagement (Upvotes &amp; Comments)</span>
+            </div>
+            <div class="cpc-example-box">
+              <div style="display:flex;gap:12px;font-size:12.5px;font-weight:700;color:#059669;padding:6px 8px;background:#ecfdf5;border-radius:6px;">
+                <span>▲ 10.4k upvotes</span>
+                <span>💬 640 comments</span>
+                <span style="color:#047857;font-size:11.5px;font-weight:600;">(High Activity)</span>
+              </div>
+              <div style="display:flex;gap:12px;font-size:12.5px;font-weight:700;color:#64748b;padding:6px 8px;background:#f1f5f9;border-radius:6px;">
+                <span>▲ 38 upvotes</span>
+                <span>💬 5 comments</span>
+                <span style="color:#64748b;font-size:11.5px;font-weight:600;">(Low Activity)</span>
+              </div>
+            </div>
+            <div class="cpc-desc">
+              Counts indicating the level of community discussion and interaction on the post.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- The 3 Decision Steps -->
+      <div style="margin-top:10px;">
+        <h3 style="font-size:16px;font-weight:800;color:#1e1b4b;margin-bottom:8px;">📝 The 3 Questions You Will Answer on Each Task</h3>
+        <div class="inst-rule-list">
+          <div class="inst-rule-item">
+            <div class="iri-num">1</div>
+            <div class="iri-text">
+              <strong>Question 1: Perceived Credibility</strong>
+              <span>Based on the information presented, select which of the two posts appears <strong>more credible</strong> to you.</span>
+            </div>
+          </div>
+          <div class="inst-rule-item">
+            <div class="iri-num">2</div>
+            <div class="iri-text">
+              <strong>Question 2: Sharing Decision</strong>
+              <span>If you encountered these posts on your feed, indicate whether you would personally share your chosen post, or choose to share neither.</span>
+            </div>
+          </div>
+          <div class="inst-rule-item">
+            <div class="iri-num">3</div>
+            <div class="iri-text">
+              <strong>Question 3: Confidence Rating</strong>
+              <span>Indicate how confident you feel in your credibility assessment on a scale from 1 (Not confident at all) to 7 (Completely confident).</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:12px;flex-wrap:wrap;">
+        <button type="button" class="btn-prev" onclick="gotoStep(2)">&larr; Back to Reflection Checks</button>
+        <button type="button" class="btn-next" style="padding:13px 26px;font-size:14.5px;background:var(--primary-gradient);box-shadow:0 4px 16px rgba(79,70,229,0.35);" onclick="startDceTasks()">
+          Start Evaluation Tasks (Task 1 of 8) &rarr;
+        </button>
       </div>
     </div>
   </div>
@@ -1177,17 +1500,11 @@ textarea.f-input:focus { background: #fff; border-color: #6366f1; box-shadow: 0 
       <div class="card-header">
         <div class="card-title">
           <h2 id="task-title">Task 1 of 8</h2>
-          <p>Imagine both of these posts appeared in your feed. Review the headlines, post flairs, and stickied moderation context, then choose which post you would be more likely to share.</p>
+          <p>Imagine both of these posts appeared in your social media feed. Review the two posts and answer the three questions below based on your personal judgment.</p>
         </div>
         <div style="display:flex;gap:6px;align-items:center;">
-          <button type="button" class="guide-toggle-btn" onclick="toggleCuesModal()">ℹ️ Guide to Cues</button>
+          <button type="button" class="guide-toggle-btn" onclick="toggleCuesModal()">📖 Post Elements Guide</button>
         </div>
-      </div>
-
-      <!-- TIP BANNER -->
-      <div class="cues-tip-banner" id="tip-banner">
-        <span>💡 <strong>Evaluation Tip:</strong> Look closely at each post's <strong>flair</strong> (AI confidence rating) and <strong>stickied moderator context</strong> (fact-checker verdicts and community notes) before choosing which post to share.</span>
-        <button type="button" class="tip-close" onclick="document.getElementById('tip-banner').style.display='none'">&times;</button>
       </div>
 
       <!-- PAIRWISE CARDS GRID -->
@@ -1285,30 +1602,58 @@ textarea.f-input:focus { background: #fff; border-color: #6366f1; box-shadow: 0 
 
       </div>
 
-      <!-- CHOICE INTERACTION BUTTONS -->
-      <label class="q-lbl" style="text-align:center;margin-bottom:8px;">Comparing all signals and content, which post would you be more likely to share?</label>
-      <div class="choice-action-bar">
-        <button type="button" class="btn-choose" id="btn-choose-a" onclick="choosePost('A')">👈 I would share Post A</button>
-        <button type="button" class="btn-choose" id="btn-choose-b" onclick="choosePost('B')">I would share Post B 👉</button>
-      </div>
-
-      <!-- TRUST IN CHOSEN POST QUESTION -->
-      <div class="q-block task-trust-block">
-        <label class="q-lbl">How confident are you in trusting the post you selected to share?</label>
-        <p class="q-sub">Rate your trust in the information from 1 (Do not trust at all / Skeptical) to 7 (Completely trust / Confident it is accurate):</p>
-        <div class="likert-bar" id="task-conf-likert">
-          <button type="button" class="lbtn" onclick="selTaskConf(this, 1)">1</button>
-          <button type="button" class="lbtn" onclick="selTaskConf(this, 2)">2</button>
-          <button type="button" class="lbtn" onclick="selTaskConf(this, 3)">3</button>
-          <button type="button" class="lbtn" onclick="selTaskConf(this, 4)">4</button>
-          <button type="button" class="lbtn" onclick="selTaskConf(this, 5)">5</button>
-          <button type="button" class="lbtn" onclick="selTaskConf(this, 6)">6</button>
-          <button type="button" class="lbtn" onclick="selTaskConf(this, 7)">7</button>
+      <!-- DUAL-RESPONSE INTERACTION PANEL -->
+      <div class="dual-response-panel">
+        <!-- QUESTION 1: RELATIVE CREDIBILITY (DCE RELATIVE EVALUATION) -->
+        <div class="dr-section">
+          <label class="q-lbl" style="text-align:center;font-size:15px;margin-bottom:10px;display:block;">
+            1. Based on the information presented above, which post appears <strong>more credible</strong> to you?
+          </label>
+          <div class="choice-action-bar">
+            <button type="button" class="btn-choose" id="btn-choose-a" onclick="choosePost('A')">
+              👈 Post A appears more credible
+            </button>
+            <button type="button" class="btn-choose" id="btn-choose-b" onclick="choosePost('B')">
+              Post B appears more credible 👉
+            </button>
+          </div>
         </div>
-        <div class="likert-labels">
-          <span>1 &ndash; Do not trust at all (Skeptical)</span>
-          <span>4 &ndash; Moderately trust (Unsure)</span>
-          <span>7 &ndash; Completely trust (Confident it's true)</span>
+
+        <!-- QUESTION 2: REAL-WORLD SHARING DECISION / OPT-OUT -->
+        <div class="dr-section task-share-block" id="task-share-block" style="margin-top:20px;padding-top:16px;border-top:1.5px solid #e2e8f0;">
+          <label class="q-lbl" style="text-align:center;font-size:14.5px;margin-bottom:6px;display:block;">
+            2. If you encountered these on your feed, would you personally share or forward your chosen post?
+          </label>
+          <div class="share-decision-row" style="display:flex;justify-content:center;gap:14px;margin-top:10px;flex-wrap:wrap;">
+            <button type="button" class="btn-share-opt" id="btn-share-yes" onclick="selShareDecision('yes')">
+              <span>📢</span> Yes, I would share it
+            </button>
+            <button type="button" class="btn-share-opt" id="btn-share-no" onclick="selShareDecision('no_neither')">
+              <span>🚫</span> No, I would share neither (scroll past)
+            </button>
+          </div>
+        </div>
+
+        <!-- QUESTION 3: CONFIDENCE / TRUST IN EVALUATION -->
+        <div class="dr-section task-trust-block" style="margin-top:20px;padding-top:16px;border-top:1.5px solid #e2e8f0;">
+          <label class="q-lbl" style="text-align:center;font-size:14.5px;margin-bottom:4px;display:block;">
+            3. How confident are you in this assessment?
+          </label>
+          <p class="q-sub" style="text-align:center;margin-bottom:12px;">Rate from 1 (Not confident at all) to 7 (Completely confident):</p>
+          <div class="likert-bar" id="task-conf-likert">
+            <button type="button" class="lbtn" onclick="selTaskConf(this, 1)">1</button>
+            <button type="button" class="lbtn" onclick="selTaskConf(this, 2)">2</button>
+            <button type="button" class="lbtn" onclick="selTaskConf(this, 3)">3</button>
+            <button type="button" class="lbtn" onclick="selTaskConf(this, 4)">4</button>
+            <button type="button" class="lbtn" onclick="selTaskConf(this, 5)">5</button>
+            <button type="button" class="lbtn" onclick="selTaskConf(this, 6)">6</button>
+            <button type="button" class="lbtn" onclick="selTaskConf(this, 7)">7</button>
+          </div>
+          <div class="likert-labels">
+            <span>1 &ndash; Completely Skeptical</span>
+            <span>4 &ndash; Moderately Unsure</span>
+            <span>7 &ndash; Completely Confident</span>
+          </div>
         </div>
       </div>
 
@@ -1493,32 +1838,105 @@ textarea.f-input:focus { background: #fff; border-color: #6366f1; box-shadow: 0 
 
 </div>
 
-<!-- GUIDE MODAL -->
+<!-- INSTRUCTIONS & CUES GUIDE MODAL (ACCESSIBLE DURING TASKS) -->
 <div class="modal-overlay" id="cues-modal" onclick="if(event.target===this) toggleCuesModal()">
-  <div class="modal-card">
+  <div class="modal-card" style="max-width:760px;max-height:88vh;overflow-y:auto;">
     <div class="modal-header">
-      <h3>📖 Guide to Moderation Cues</h3>
+      <h3 style="display:flex;align-items:center;gap:8px;">📖 Post Elements Reference Guide</h3>
       <button type="button" class="modal-close" onclick="toggleCuesModal()">&times;</button>
     </div>
-    <div class="modal-body">
-      <div class="guide-item">
-        <div class="gi-title">🤖 AI Moderation Flag</div>
-        <div class="gi-desc">An automated machine-learning model scanning posts for potential misinformation. The percentage indicates the algorithm's confidence in its flag (Low: 51%&ndash;58%, Medium: 69%&ndash;76%, High: 91%&ndash;97%).</div>
+    <div class="modal-body" style="padding-top:10px;">
+      <p style="font-size:13.5px;color:#334155;line-height:1.55;margin-bottom:14px;">
+        A reference guide for the elements and features appearing on posts:
+      </p>
+
+      <div class="cue-guide-grid" style="margin-top:10px;">
+        <!-- Cue 1: AI Post Flair -->
+        <div class="cue-preview-card">
+          <div class="cpc-header">
+            <span style="font-size:18px;">🤖</span>
+            <span>1. Automated AI Moderation Flair</span>
+          </div>
+          <div class="cpc-example-box">
+            <span class="reddit-post-flair flair-low-risk">🤖 AI Automated Check: Low Risk &bull; <strong>Likely Accurate (55% Conf.)</strong></span>
+            <span class="reddit-post-flair flair-med-risk">🤖 AI Automated Check: Moderate Risk &bull; <strong>Review Caution (72% Conf.)</strong></span>
+            <span class="reddit-post-flair flair-high-risk">🤖 AI Automated Check: High Risk &bull; <strong>Flagged Misleading (94% Conf.)</strong></span>
+          </div>
+          <div class="cpc-desc">
+            An automated algorithmic check displayed as a flair badge on the post title, showing an automated assessment and confidence level.
+          </div>
+        </div>
+
+        <!-- Cue 2: Fact-Checker Badge -->
+        <div class="cue-preview-card">
+          <div class="cpc-header">
+            <span style="font-size:18px;">🛡️</span>
+            <span>2. Independent Fact-Check Badge</span>
+          </div>
+          <div class="cpc-example-box">
+            <div class="cue-badge cue-fc-yes" style="font-size:12px;padding:8px 10px;">🛡️ <strong>Independent Fact-Check (Snopes / BOOM):</strong> Verified Accurate</div>
+            <div class="cue-badge cue-absent" style="font-size:12px;padding:8px 10px;">🛡️ <strong>Independent Fact-Check:</strong> None on record</div>
+          </div>
+          <div class="cpc-desc">
+            A review badge indicating whether an external third-party fact-checking organization has verified or reviewed the claim.
+          </div>
+        </div>
+
+        <!-- Cue 3: Community Note -->
+        <div class="cue-preview-card">
+          <div class="cpc-header">
+            <span style="font-size:18px;">👥</span>
+            <span>3. Community Context Note</span>
+          </div>
+          <div class="cpc-example-box">
+            <div class="cn-box" style="padding:8px 10px;">
+              <div class="cn-header">👥 Community Note &bull; Rated helpful by readers</div>
+              <div class="cn-body" style="font-size:11.5px;">&ldquo;Clinical safety trials confirmed the policy is active and verified by official health registries.&rdquo;</div>
+            </div>
+            <div class="cue-badge cue-absent" style="font-size:12px;padding:8px 10px;">👥 <strong>Community Note:</strong> No notes submitted</div>
+          </div>
+          <div class="cpc-desc">
+            A crowdsourced context note submitted and rated by community members to provide additional background or nuances.
+          </div>
+        </div>
+
+        <!-- Cue 4: Social Engagement -->
+        <div class="cue-preview-card">
+          <div class="cpc-header">
+            <span style="font-size:18px;">▲</span>
+            <span>4. Reader Engagement (Upvotes &amp; Comments)</span>
+          </div>
+          <div class="cpc-example-box">
+            <div style="display:flex;gap:10px;font-size:12px;font-weight:700;color:#059669;padding:6px 8px;background:#ecfdf5;border-radius:6px;">
+              <span>▲ 10.4k upvotes</span>
+              <span>💬 640 comments</span>
+              <span style="color:#047857;font-size:11px;">(High Activity)</span>
+            </div>
+            <div style="display:flex;gap:10px;font-size:12px;font-weight:700;color:#64748b;padding:6px 8px;background:#f1f5f9;border-radius:6px;">
+              <span>▲ 38 upvotes</span>
+              <span>💬 5 comments</span>
+              <span style="color:#64748b;font-size:11px;">(Low Activity)</span>
+            </div>
+          </div>
+          <div class="cpc-desc">
+            Counts indicating the level of community discussion and interaction on the post.
+          </div>
+        </div>
       </div>
-      <div class="guide-item">
-        <div class="gi-title">🛡️ Independent Fact-Checker Badge</div>
-        <div class="gi-desc">A formal review by certified non-partisan fact-checking organizations (e.g., BOOM Live, Alt News, PIB Fact Check, Snopes) stating their official finding.</div>
-      </div>
-      <div class="guide-item">
-        <div class="gi-title">📝 Community Note</div>
-        <div class="gi-desc">A crowdsourced context box written and rated helpful by active Reddit community readers to clarify or provide missing background.</div>
-      </div>
-      <div class="guide-item">
-        <div class="gi-title">▲ Community Engagement (Upvotes &amp; Comments)</div>
-        <div class="gi-desc">Social metrics showing how many Reddit users upvoted the submission and engaged in discussion comments.</div>
+
+      <!-- Decision Reminder -->
+      <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:12px 14px;margin-top:10px;">
+        <div style="font-size:13px;font-weight:800;color:#1e1b4b;margin-bottom:4px;">Task Decisions:</div>
+        <div style="font-size:12.5px;color:#475569;line-height:1.5;">
+          1. <strong>Perceived Credibility:</strong> Which post appears more credible (Post A or B)?<br>
+          2. <strong>Sharing Decision:</strong> Would you personally share your chosen post (Yes or Neither)?<br>
+          3. <strong>Confidence:</strong> How confident do you feel in your assessment (1 = Not confident to 7 = Completely confident)?
+        </div>
       </div>
     </div>
-    <button type="button" class="btn-next" style="margin-top:14px;padding:11px;" onclick="toggleCuesModal()">Got it, continue &rarr;</button>
+    <div style="padding:14px 20px;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;">
+      <button type="button" class="btn-next" style="padding:9px 20px;font-size:13.5px;" onclick="toggleCuesModal()">Close &amp; Return to Task &rarr;</button>
+    </div>
   </div>
 </div>
 
@@ -1554,7 +1972,7 @@ let step4DurationSec = 0;
 let totalSurveyDurationSec = 0;
 
 let responses = {
-  session_id: 'iitm_' + Math.random().toString(36).substring(2, 10),
+  session_id: 'iitm_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 8),
   profile: {},
   crt: {},
   dce_choices: [],
@@ -1565,16 +1983,23 @@ let responses = {
 };
 
 let currentChoice = null;
+let currentShareDecision = null;
 let currentConfidence = null;
 
-// BROWSER HISTORY: Enabled for testing (back navigation allowed)
-window.addEventListener('popstate', function (event) {
-  if (event.state && event.state.step) {
-    gotoStep(event.state.step);
-  } else if (currentStep > 1) {
-    gotoStep(currentStep - 1);
+function selShareDecision(val) {
+  currentShareDecision = val;
+  const byes = document.getElementById('btn-share-yes');
+  const bno = document.getElementById('btn-share-no');
+  if (val === 'yes') {
+    if (byes) byes.classList.add('selected');
+    if (bno) bno.classList.remove('selected');
+  } else {
+    if (bno) bno.classList.add('selected');
+    if (byes) byes.classList.remove('selected');
   }
-});
+}
+
+// BROWSER HISTORY: Production mobile-trap enabled
 
 function showToast(msg) {
   let toast = document.getElementById('survey-toast');
@@ -1627,7 +2052,7 @@ function shuffleArray(array) {
   return arr;
 }
 
-// BLOCK ALLOCATION (URL Param > Random Fallback)
+// BLOCK ALLOCATION (URL Param > Live Least-Filled Auto-Balance > Random Fallback)
 function initBlock() {
   const urlParams = new URLSearchParams(window.location.search);
   const qBlock = urlParams.get('b') || urlParams.get('block');
@@ -1635,17 +2060,61 @@ function initBlock() {
   if (qBlock && ['1', '2', '3'].includes(qBlock)) {
     assignedBlock = parseInt(qBlock, 10);
   } else {
-    // True balanced random rotation across 1, 2, 3
+    // True balanced random rotation across 1, 2, 3 as instantaneous fallback
     assignedBlock = Math.floor(Math.random() * 3) + 1;
   }
 
   responses.assigned_block = assignedBlock;
+  const sidEl = document.getElementById('final-session-id');
+  if (sidEl) sidEl.textContent = `Session ID: ${responses.session_id}`;
   
   // Filter 8 tasks for this block and randomize order within block
   const rawBlockTasks = TASKS.filter(t => t.block === assignedBlock);
   blockTasks = shuffleArray(rawBlockTasks);
   currentTaskIndex = 0;
   loadTask(0);
+
+  // Background Auto-Balance: Query Google Sheets for least-filled block without freezing UI
+  if (!qBlock && typeof GOOGLE_APPS_SCRIPT_URL !== 'undefined' && GOOGLE_APPS_SCRIPT_URL) {
+    fetchLeastFilledBlock();
+  }
+}
+
+function fetchLeastFilledBlock() {
+  // Use JSONP callback to guarantee 100% cross-origin and local file:// compatibility without CORS restrictions
+  const cbName = 'handleBlockCounts_' + Math.floor(Math.random() * 1000000);
+  window[cbName] = function(data) {
+    try {
+      if (data && data.recommended_block && [1, 2, 3].includes(data.recommended_block)) {
+        if (assignedBlock !== data.recommended_block) {
+          console.log(`[Auto-Balance] Live database balanced to least-filled Block ${data.recommended_block}. Response counts:`, data.counts);
+          assignedBlock = data.recommended_block;
+          responses.assigned_block = assignedBlock;
+          const rawBlockTasks = TASKS.filter(t => t.block === assignedBlock);
+          blockTasks = shuffleArray(rawBlockTasks);
+          if (currentStep === 3) {
+            loadTask(currentTaskIndex);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn("[Auto-Balance] Notice processing quota counts:", e);
+    } finally {
+      delete window[cbName];
+      const s = document.getElementById(cbName);
+      if (s) s.remove();
+    }
+  };
+
+  const script = document.createElement('script');
+  script.id = cbName;
+  script.src = GOOGLE_APPS_SCRIPT_URL + '?action=get_block_counts&callback=' + cbName;
+  script.onerror = function() {
+    delete window[cbName];
+    if (script) script.remove();
+    console.warn("[Auto-Balance] Quota endpoint unreachable; continuing with random block allocation.");
+  };
+  document.head.appendChild(script);
 }
 
 // Trap phone / browser back button to prevent accidental navigation away
@@ -1655,15 +2124,16 @@ window.addEventListener('popstate', function (event) {
 });
 
 const STAGE_TITLES = {
-  1: { badge: "Section 1 of 4", title: "Profile & Browsing Habits", pct: 25 },
-  2: { badge: "Section 2 of 4", title: "Cognitive Reflection Checks", pct: 50 },
+  1: { badge: "Section 1 of 4", title: "Profile & Browsing Habits", pct: 20 },
+  2: { badge: "Section 2 of 4", title: "Cognitive Reflection Checks", pct: 40 },
+  'instructions': { badge: "Study Overview", title: "Overview & Post Elements Guide", pct: 55 },
   3: { badge: "Section 3 of 4", title: "Social Media Evaluation", pct: 75 },
   4: { badge: "Section 4 of 4", title: "Study Feedback & Review", pct: 95 },
   5: { badge: "Complete 🎉", title: "Thank You & Acknowledgment", pct: 100 }
 };
 
 function updateStageIndicator(s) {
-  const info = STAGE_TITLES[s] || { badge: `Section ${s}`, title: "", pct: 25 * s };
+  const info = STAGE_TITLES[s] || { badge: `Section ${s}`, title: "", pct: 25 * (typeof s === 'number' ? s : 3) };
   const bEl = document.getElementById('stage-badge');
   const tEl = document.getElementById('stage-title');
   const fEl = document.getElementById('stage-fill');
@@ -1677,7 +2147,7 @@ function updateStageIndicator(s) {
   }
   if (fEl) {
     if (s === 3) {
-      fEl.style.width = (50 + ((currentTaskIndex + 1) / 8) * 35) + '%';
+      fEl.style.width = (55 + ((currentTaskIndex + 1) / 8) * 35) + '%';
     } else {
       fEl.style.width = info.pct + '%';
     }
@@ -1698,6 +2168,17 @@ function gotoStep(s) {
   const targetPane = document.getElementById('pane-' + s);
   if (targetPane) targetPane.classList.add('active');
 
+  if (s === 3) {
+    document.body.classList.add('step-3-active');
+    if (!blockTasks || blockTasks.length === 0) {
+      const rawBlockTasks = TASKS.filter(t => t.block === assignedBlock);
+      blockTasks = shuffleArray(rawBlockTasks);
+    }
+    loadTask(currentTaskIndex);
+  } else {
+    document.body.classList.remove('step-3-active');
+  }
+
   updateStageIndicator(s);
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1717,7 +2198,7 @@ function validateStep1() {
   const p = responses.profile;
   const ageVal = parseInt(document.getElementById('inp-age').value, 10);
   if (!ageVal || isNaN(ageVal) || ageVal < 15 || ageVal > 99) {
-    alert("Please enter a valid age in years (e.g. 23).");
+    alert("Please enter a valid age in years (between 15 and 99).");
     document.getElementById('inp-age').focus();
     return;
   }
@@ -1728,11 +2209,11 @@ function validateStep1() {
     return;
   }
   if (!p.edu) {
-    alert("Please select your education level.");
+    alert("Please select your highest education level.");
     return;
   }
   if (!p.pref_domain || !Array.isArray(p.pref_domain) || p.pref_domain.length === 0) {
-    alert("Please select 1 or 2 topic domains you follow most often.");
+    alert("Please select at least 1 topic domain you follow most often.");
     return;
   }
   if (!p.reddit_freq) {
@@ -1753,14 +2234,17 @@ function validateStep1() {
 function validateStep2() {
   const c = responses.crt;
   if (!c.crt_race || !c.crt_sheep || !c.crt_name) {
-    alert("Please answer all 3 thinking check questions before proceeding.");
+    alert("Please answer all 3 reflection check questions before proceeding.");
     return;
   }
 
   step2DurationSec = Math.max(1, Math.round((Date.now() - step2StartTime) / 1000));
+  gotoStep('instructions');
+}
+
+function startDceTasks() {
   step3StartTime = Date.now();
   taskStartTime = Date.now();
-
   gotoStep(3);
 }
 
@@ -1813,18 +2297,57 @@ function toggleChk(item) {
 // TASK RENDERER
 function loadTask(idx) {
   currentChoice = null;
+  currentShareDecision = null;
   currentConfidence = null;
   taskStartTime = Date.now(); // Start timer for this specific task
 
-  document.getElementById('card-a').classList.remove('chosen');
-  document.getElementById('card-b').classList.remove('chosen');
-  document.getElementById('btn-choose-a').classList.remove('active');
-  document.getElementById('btn-choose-b').classList.remove('active');
+  if (!blockTasks || blockTasks.length === 0) {
+    const rawBlockTasks = TASKS.filter(t => t.block === assignedBlock);
+    blockTasks = shuffleArray(rawBlockTasks);
+  }
+
+  const caCard = document.getElementById('card-a');
+  const cbCard = document.getElementById('card-b');
+  const baBtn = document.getElementById('btn-choose-a');
+  const bbBtn = document.getElementById('btn-choose-b');
+  if (caCard) caCard.classList.remove('chosen');
+  if (cbCard) cbCard.classList.remove('chosen');
+  if (baBtn) baBtn.classList.remove('active');
+  if (bbBtn) bbBtn.classList.remove('active');
+
+  const byes = document.getElementById('btn-share-yes');
+  const bno = document.getElementById('btn-share-no');
+  if (byes) byes.classList.remove('selected');
+  if (bno) bno.classList.remove('selected');
+
   document.querySelectorAll('#task-conf-likert .lbtn').forEach(b => b.classList.remove('selected'));
 
+  // If returning to a previously answered task, restore selections
+  if (responses.dce_choices && responses.dce_choices[idx]) {
+    const prevAns = responses.dce_choices[idx];
+    if (prevAns.chosen_post) {
+      choosePost(prevAns.chosen_post);
+    }
+    if (prevAns.would_share_chosen) {
+      selShareDecision(prevAns.would_share_chosen);
+    }
+    if (prevAns.trust_in_chosen_post) {
+      document.querySelectorAll('#task-conf-likert .lbtn').forEach(b => {
+        if (parseInt(b.textContent.trim(), 10) === prevAns.trust_in_chosen_post) {
+          selTaskConf(b, prevAns.trust_in_chosen_post);
+        }
+      });
+    }
+  }
+
   const t = blockTasks[idx];
-  document.getElementById('task-title').textContent = `Task ${idx + 1} of 8`;
-  const progEl = document.getElementById('task-prog'); if (progEl) progEl.textContent = `${idx + 1}/8`; updateStageIndicator(3);
+  if (!t) return;
+
+  const tTitle = document.getElementById('task-title');
+  if (tTitle) tTitle.textContent = `Task ${idx + 1} of 8`;
+  const progEl = document.getElementById('task-prog');
+  if (progEl) progEl.textContent = `${idx + 1}/8`;
+  updateStageIndicator(3);
 
   // Render Post A
   const ca = CLAIMS[t.post_a.claim_id];
@@ -1838,8 +2361,18 @@ function loadTask(idx) {
   document.getElementById('upvotes-a').textContent = engA.upvotes;
   document.getElementById('comments-a').textContent = engA.comments;
 
-  // Set Reddit Post Flair (Directly on Title)
-  document.getElementById('flair-a').innerHTML = `🤖 AI Flag: Flagged Misleading &bull; <strong>${aiScoreA}% Confidence</strong>`;
+  // Set Polarity-Aware Reddit Post Flair (Directly on Title)
+  const flairElA = document.getElementById('flair-a');
+  if (t.post_a.ai_bucket === 'Low') {
+    flairElA.className = 'reddit-post-flair flair-low-risk';
+    flairElA.innerHTML = `🤖 AI Automated Check: Low Risk &bull; <strong>Likely Accurate (${aiScoreA}% Conf.)</strong>`;
+  } else if (t.post_a.ai_bucket === 'Med') {
+    flairElA.className = 'reddit-post-flair flair-med-risk';
+    flairElA.innerHTML = `🤖 AI Automated Check: Moderate Risk &bull; <strong>Review Caution (${aiScoreA}% Conf.)</strong>`;
+  } else {
+    flairElA.className = 'reddit-post-flair flair-high-risk';
+    flairElA.innerHTML = `🤖 AI Automated Check: High Risk &bull; <strong>Flagged Misleading (${aiScoreA}% Conf.)</strong>`;
+  }
 
   let fcHtmlA = (t.post_a.fc === 'Present')
     ? `<div class="cue-badge cue-fc-yes">🛡️ <strong>Independent Fact-Check (${ca.fc_source}):</strong> ${ca.fc_verdict}</div>`
@@ -1866,8 +2399,18 @@ function loadTask(idx) {
   document.getElementById('upvotes-b').textContent = engB.upvotes;
   document.getElementById('comments-b').textContent = engB.comments;
 
-  // Set Reddit Post Flair (Directly on Title)
-  document.getElementById('flair-b').innerHTML = `🤖 AI Flag: Flagged Misleading &bull; <strong>${aiScoreB}% Confidence</strong>`;
+  // Set Polarity-Aware Reddit Post Flair (Directly on Title)
+  const flairElB = document.getElementById('flair-b');
+  if (t.post_b.ai_bucket === 'Low') {
+    flairElB.className = 'reddit-post-flair flair-low-risk';
+    flairElB.innerHTML = `🤖 AI Automated Check: Low Risk &bull; <strong>Likely Accurate (${aiScoreB}% Conf.)</strong>`;
+  } else if (t.post_b.ai_bucket === 'Med') {
+    flairElB.className = 'reddit-post-flair flair-med-risk';
+    flairElB.innerHTML = `🤖 AI Automated Check: Moderate Risk &bull; <strong>Review Caution (${aiScoreB}% Conf.)</strong>`;
+  } else {
+    flairElB.className = 'reddit-post-flair flair-high-risk';
+    flairElB.innerHTML = `🤖 AI Automated Check: High Risk &bull; <strong>Flagged Misleading (${aiScoreB}% Conf.)</strong>`;
+  }
 
   let fcHtmlB = (t.post_b.fc === 'Present')
     ? `<div class="cue-badge cue-fc-yes">🛡️ <strong>Independent Fact-Check (${cb.fc_source}):</strong> ${cb.fc_verdict}</div>`
@@ -1911,7 +2454,9 @@ function loadTask(idx) {
   };
 
   const btnNext = document.getElementById('btn-next-task');
-  btnNext.textContent = (idx === 7) ? "Proceed to Feedback (Final Section) →" : `Next Task (${idx + 2} of 8) →`;
+  if (btnNext) {
+    btnNext.textContent = (idx === 7) ? "Proceed to Feedback (Final Section) →" : `Next Task (${idx + 2} of 8) →`;
+  }
 }
 
 function choosePost(choice) {
@@ -1922,11 +2467,15 @@ function choosePost(choice) {
   const bb = document.getElementById('btn-choose-b');
 
   if (choice === 'A') {
-    ca.classList.add('chosen'); cb.classList.remove('chosen');
-    ba.classList.add('active'); bb.classList.remove('active');
+    if (ca) ca.classList.add('chosen');
+    if (cb) cb.classList.remove('chosen');
+    if (ba) ba.classList.add('active');
+    if (bb) bb.classList.remove('active');
   } else {
-    cb.classList.add('chosen'); ca.classList.remove('chosen');
-    bb.classList.add('active'); ba.classList.remove('active');
+    if (cb) cb.classList.add('chosen');
+    if (ca) ca.classList.remove('chosen');
+    if (bb) bb.classList.add('active');
+    if (ba) ba.classList.remove('active');
   }
 }
 
@@ -1938,48 +2487,67 @@ function selTaskConf(btn, val) {
 
 function nextTask() {
   if (!currentChoice) {
-    alert("Please select either Post A or Post B before proceeding.");
+    alert("Please answer Question 1: select whether Post A or Post B appears more credible.");
+    return;
+  }
+  if (!currentShareDecision) {
+    alert("Please answer Question 2: indicate whether you would share your chosen post or share neither.");
     return;
   }
   if (!currentConfidence) {
-    alert("Please rate how confident you are in trusting the selected post (1 to 7).");
+    alert("Please answer Question 3: rate your confidence in this assessment (1 to 7).");
     return;
+  }
+
+  const currentTask = blockTasks[currentTaskIndex];
+  if (!currentTask) {
+    console.error("No task found at index " + currentTaskIndex);
+    return;
+  }
+
+  // Ensure rendered data exists safely
+  if (!currentTask.rendered) {
+    loadTask(currentTaskIndex);
   }
 
   // Calculate response latency for this choice card in seconds
   const taskDurationSec = Math.max(1, Math.round((Date.now() - taskStartTime) / 1000));
-  const currentTask = blockTasks[currentTaskIndex];
 
-  responses.dce_choices.push({
+  const renA = currentTask.rendered ? currentTask.rendered.post_a : {};
+  const renB = currentTask.rendered ? currentTask.rendered.post_b : {};
+
+  // Store strictly by index so Previous Task never creates duplicate rows
+  responses.dce_choices[currentTaskIndex] = {
     task_order_in_presentation: currentTaskIndex + 1,
     task_global_id: currentTask.task_id,
     block: assignedBlock,
     domain: currentTask.domain,
     chosen_post: currentChoice,
+    would_share_chosen: currentShareDecision,
     trust_in_chosen_post: currentConfidence,
     task_response_time_sec: taskDurationSec,
 
-    post_a_claim_id: currentTask.rendered.post_a.claim_id,
-    post_a_ai_bucket: currentTask.rendered.post_a.ai_bucket,
-    post_a_ai_score_shown: currentTask.rendered.post_a.ai_score_shown,
-    post_a_fc_status: currentTask.rendered.post_a.fc_status,
-    post_a_fc_text: currentTask.rendered.post_a.fc_text,
-    post_a_cn_status: currentTask.rendered.post_a.cn_status,
-    post_a_upvotes_level: currentTask.rendered.post_a.upvotes_level,
-    post_a_upvotes_shown: currentTask.rendered.post_a.upvotes_shown,
-    post_a_comments_shown: currentTask.rendered.post_a.comments_shown,
+    post_a_claim_id: renA.claim_id || currentTask.post_a.claim_id,
+    post_a_ai_bucket: renA.ai_bucket || currentTask.post_a.ai_bucket,
+    post_a_ai_score_shown: renA.ai_score_shown || (getConfidenceScore(currentTask.post_a.ai_bucket) + '%'),
+    post_a_fc_status: renA.fc_status || currentTask.post_a.fc,
+    post_a_fc_text: renA.fc_text || ((currentTask.post_a.fc === 'Present') ? `${CLAIMS[currentTask.post_a.claim_id].fc_source}: ${CLAIMS[currentTask.post_a.claim_id].fc_verdict}` : 'None'),
+    post_a_cn_status: renA.cn_status || currentTask.post_a.cn,
+    post_a_upvotes_level: renA.upvotes_level || currentTask.post_a.upvotes,
+    post_a_upvotes_shown: renA.upvotes_shown || getEngagement(currentTask.post_a.upvotes).upvotes,
+    post_a_comments_shown: renA.comments_shown || getEngagement(currentTask.post_a.upvotes).comments,
 
-    post_b_claim_id: currentTask.rendered.post_b.claim_id,
-    post_b_ai_bucket: currentTask.rendered.post_b.ai_bucket,
-    post_b_ai_score_shown: currentTask.rendered.post_b.ai_score_shown,
-    post_b_fc_status: currentTask.rendered.post_b.fc_status,
-    post_b_fc_text: currentTask.rendered.post_b.fc_text,
-    post_b_cn_status: currentTask.rendered.post_b.cn_status,
-    post_b_upvotes_level: currentTask.rendered.post_b.upvotes_level,
-    post_b_upvotes_shown: currentTask.rendered.post_b.upvotes_shown,
-    post_b_comments_shown: currentTask.rendered.post_b.comments_shown,
+    post_b_claim_id: renB.claim_id || currentTask.post_b.claim_id,
+    post_b_ai_bucket: renB.ai_bucket || currentTask.post_b.ai_bucket,
+    post_b_ai_score_shown: renB.ai_score_shown || (getConfidenceScore(currentTask.post_b.ai_bucket) + '%'),
+    post_b_fc_status: renB.fc_status || currentTask.post_b.fc,
+    post_b_fc_text: renB.fc_text || ((currentTask.post_b.fc === 'Present') ? `${CLAIMS[currentTask.post_b.claim_id].fc_source}: ${CLAIMS[currentTask.post_b.claim_id].fc_verdict}` : 'None'),
+    post_b_cn_status: renB.cn_status || currentTask.post_b.cn,
+    post_b_upvotes_level: renB.upvotes_level || currentTask.post_b.upvotes,
+    post_b_upvotes_shown: renB.upvotes_shown || getEngagement(currentTask.post_b.upvotes).upvotes,
+    post_b_comments_shown: renB.comments_shown || getEngagement(currentTask.post_b.upvotes).comments,
     timestamp: new Date().toISOString()
-  });
+  };
 
   if (currentTaskIndex < 7) {
     currentTaskIndex++;
@@ -1999,7 +2567,7 @@ function prevTask() {
     loadTask(currentTaskIndex);
     window.scrollTo({ top: 120, behavior: 'smooth' });
   } else {
-    gotoStep(2);
+    gotoStep('instructions');
   }
 }
 
@@ -2009,6 +2577,9 @@ async function submitPilotSurvey() {
   document.querySelectorAll('#ana-group .chk-item input:checked').forEach(c => anaChecked.push(c.value));
   responses.pilot_feedback.attribute_attendance = anaChecked;
   responses.pilot_feedback.comments = document.getElementById('fb_comments').value.trim();
+
+  // Clean DCE choices array (strictly 8 items, no gaps or nulls)
+  responses.dce_choices = (responses.dce_choices || []).filter(Boolean);
   
   // Disable button to prevent accidental double submission
   const submitBtn = document.getElementById('btn-submit-pilot');
@@ -2067,19 +2638,36 @@ async function sendPayloadToWebhook(url, payload) {
   });
 }
 
-
-
-// Restore saved response from localStorage if present
-try {
-  const cached = localStorage.getItem('iitm_pilot_last_payload');
-  if (cached) {
-    const parsed = JSON.parse(cached);
-    if (parsed && parsed.session_id) {
-      responses = parsed;
-      assignedBlock = parsed.assigned_block || 1;
-    }
+function downloadDataJson() {
+  let payload = responses;
+  if (!payload || !payload.dce_choices || !payload.dce_choices.length) {
+    try {
+      const saved = localStorage.getItem('iitm_pilot_last_payload');
+      if (saved) payload = JSON.parse(saved);
+    } catch (e) {}
   }
-} catch (e) {}
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `iitm_dce_response_${payload.session_id || 'pilot'}_block${payload.assigned_block || assignedBlock}.json`;
+  a.click();
+}
+
+function copySessionId() {
+  const sid = (responses && responses.session_id) || (function() {
+    try {
+      const saved = JSON.parse(localStorage.getItem('iitm_pilot_last_payload'));
+      return saved ? saved.session_id : 'N/A';
+    } catch (e) { return 'N/A'; }
+  })();
+  navigator.clipboard.writeText(sid).then(() => {
+    const msg = document.getElementById('copy-msg');
+    msg.style.display = 'block';
+    setTimeout(() => { msg.style.display = 'none'; }, 3000);
+  });
+}
+
 
 function shareSurveyLink() {
   const url = window.location.href.split('?')[0];
